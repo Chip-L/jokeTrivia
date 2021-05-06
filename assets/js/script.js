@@ -129,6 +129,28 @@ function startGame() {
   generateQuestion();
 }
 
+let timeRemaining = $("#timerDisplay");
+let secondsLeft = 60;
+
+function startTimer() {
+  // Sets interval in variable
+  let timerInterval = setInterval(function () {
+    secondsLeft--;
+    timeRemaining.textContent = secondsLeft;
+
+    if (secondsLeft === 0) {
+      // Stops execution of action at set interval
+      clearInterval(timerInterval);
+      // Calls function to create and append image
+      gameOver();
+    }
+  }, 1000);
+}
+
+function gameover() {
+  //display game over screen
+  //display high score input
+}
 $(document).ready(function () {
   getJokeFromAPI();
   getTriviaFromAPI();

@@ -1,4 +1,20 @@
-:root {
+<<<<<<< HEAD :root {
+  --light-beaver-gray: #bcb4ac;
+  --pewter-light: #848484;
+  --pewter-gray: #6c6c6c;
+  --dark-shell-pink: #a14b51;
+  --very-dark-cocoa: #624b45;
+  --black: #000000;
+}
+
+header {
+  display: flex;
+}
+
+h2 {
+  padding: 0 10px 0 10px;
+}
+======= :root {
   --light-beaver-gray: #bcb4ac;
   --pewter-light: #848484;
   --pewter-gray: #6c6c6c;

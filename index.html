@@ -17,9 +17,16 @@
 
     <!-- local CSS -->
     <link rel="stylesheet" href="./assets/css/style.css" />
+
   </head>
+  
   <body class="container" id="mainScreen">
-    <header class="container border border-dark rounded mt-3 p-2">
+    <header id="header" class="justify-content-between mt-3">
+      <h2 class="border border-dark rounded">Score:<span id="scoreDisplay"></span></h2>
+      <h1>JOKE TRIVIA</div>
+      <h2 id="timerDisplay" class="border border-dark rounded">Timer:<span id="timerDisplay"></span></h2>
+    </header>
+    <main class="container border border-dark rounded mt-3 p-2">
       <h1 class="row justify-content-center">Joke Trivia</h1>
       <div class="d-flex justify-content-center">
         <button id="btnJoke" class="btn btn-secondary btn-lg m-2">
@@ -29,7 +36,7 @@
           Trivia Trivia
         </button>
       </div>
-    </header>
+    </main>
     <div id="questionScreen"></div>
     <div id="finalScoreScreen"></div>
     <div id="highScoreScreen"></div>
