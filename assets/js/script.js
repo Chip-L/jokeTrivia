@@ -76,6 +76,9 @@ function createJokeArray() {
 
     shuffleArray(objQAndA.suggestedAnswers);
     questionList.push(objQAndA);
+
+    // get new list of jokes (so we don't have to deal with async)
+    getJokeFromAPI();
   }
   // console.log(questionList);
 }
