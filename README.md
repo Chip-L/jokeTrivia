@@ -1,1 +1,1 @@
-# jokeTrivia
+# Joke Trivia
