@@ -6,3 +6,11 @@
   --very-dark-cocoa: #624b45;
   --black: #000000;
 }
+
+header {
+  display: flex;
+}
+
+h2 {
+  padding: 0 10px 0 10px;
+}
