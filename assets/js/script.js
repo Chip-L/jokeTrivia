@@ -36,8 +36,20 @@ function generateQuestion() {
   $("#mainScreen").hide();
   $("#questionScreen").show();
   let currentQuestion = $("<div>");
-  currentQuestion.text(questionList.question[0]);
+  currentQuestion.text(questionList[0].question);
   $("#questionScreen").append(currentQuestion);
+
+  for (let i = 0; i < questionList[0].suggestedAnswers.length; i++) {
+    let currentAnswer = $("<div>");
+    currentAnswer.text(questionList[0].suggestedAnswers[i]);
+    $(currentQuestion).append(currentAnswer);
+  }
+
+  // questionList.suggestedAnswers.forEach(function (i) {
+  //   let currentAnswer = $("<div>");
+  //   currentAnswer.text(questionList[i].suggestedAnswers);
+  //   $(currentQuestion).append(currentAnswer);
+  // });
 }
 
 function shuffleArray(array) {
@@ -110,7 +122,7 @@ function startGame() {
   timerInterval = 0;
   curQuestionNum = 0;
 
-  startTimer();
+  // startTimer();
 
   generateQuestion();
 }
