@@ -77,7 +77,7 @@ function createJokeArray() {
     shuffleArray(objQAndA.suggestedAnswers);
     questionList.push(objQAndA);
   }
-  console.log(questionList);
+  // console.log(questionList);
 }
 
 function createTriviaArray() {
