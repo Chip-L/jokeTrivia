@@ -38,7 +38,7 @@ function generateQuestion() {
   $("#mainScreen").hide();
   $("#questionScreen").show();
   let currentQuestion = $("<div>");
-  currentQuestion.text("questionList.question[0]");
+  currentQuestion.text(questionList.question[0]);
   $("#questionScreen").append(currentQuestion);
 }
 
