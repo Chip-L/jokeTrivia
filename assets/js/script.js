@@ -73,10 +73,9 @@ function createJokeArray() {
 
     shuffleArray(objQAndA.suggestedAnswers);
     questionList.push(objQAndA);
-
-    // get new list of jokes (so we don't have to deal with async)
-    getJokeFromAPI();
   }
+  // get new list of jokes (so we don't have to deal with async)
+  getJokeFromAPI();
   // console.log(questionList);
 }
 
@@ -84,14 +83,23 @@ function createTriviaArray() {
   // clear the array from the previous questions
   questionList = [];
 
-  console.log("triviaList: ", triviaList);
-  //populate the initial object
   for (let i = 0; i < triviaList.length; i++) {
+    // make incorrect answer list have all answers
+    triviaList[i].incorrect_answers.unshift(triviaList[i].correct_answer);
+
+    //populate the initial object
     let objQAndA = {
-      question: triviaList[i].setup,
-      suggestedAnswers: [triviaList[i].punchline],
-      correctAnswer: triviaList[i].punchline,
+      question: triviaList[i].question,
+      suggestedAnswers: triviaList[i].incorrect_answers,
+      correctAnswer: triviaList[i].correct_answer,
       userChoice: "",
     };
+
+    shuffleArray(objQAndA.suggestedAnswers);
+    questionList.push(objQAndA);
   }
+
+  // get new list of trivia (so we don't have to deal with async)
+  getTriviaFromAPI();
+  //  console.log(questionList);
 }
