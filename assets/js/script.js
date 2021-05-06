@@ -4,9 +4,7 @@ let questionList = [];
 
 // https://jservice.io/
 function getTriviaFromAPI() {
-  // let requestURL = "http://jservice.io/api/clues";
   let requestURL = "https://opentdb.com/api.php?amount=10&type=multiple";
-  // let requestURL = "http://jservice.io/api/categories?count=100";
 
   fetch(requestURL)
     .then(function (response) {
@@ -14,8 +12,7 @@ function getTriviaFromAPI() {
     })
     .then(function (data) {
       // console.log(data);
-      triviaList = data;
-      console.log(triviaList.results);
+      triviaList = data.results;
     });
 }
 
@@ -51,14 +48,6 @@ function shuffleArray(array) {
   }
 }
 
-$(document).ready(function () {
-  getJokeFromAPI();
-  getTriviaFromAPI();
-});
-
-$("#btnJoke").on("click", createJokeArray);
-$("#btnTrivia").on("click", createTriviaArray);
-
 function createJokeArray() {
   // clear the array from the previous questions
   questionList = [];
@@ -86,9 +75,40 @@ function createJokeArray() {
     shuffleArray(objQAndA.suggestedAnswers);
     questionList.push(objQAndA);
   }
+  // get new list of jokes (so we don't have to deal with async)
+  getJokeFromAPI();
   // console.log(questionList);
 }
 
 function createTriviaArray() {
-  //place holder
+  // clear the array from the previous questions
+  questionList = [];
+
+  for (let i = 0; i < triviaList.length; i++) {
+    // make incorrect answer list have all answers
+    triviaList[i].incorrect_answers.unshift(triviaList[i].correct_answer);
+
+    //populate the initial object
+    let objQAndA = {
+      question: triviaList[i].question,
+      suggestedAnswers: triviaList[i].incorrect_answers,
+      correctAnswer: triviaList[i].correct_answer,
+      userChoice: "",
+    };
+
+    shuffleArray(objQAndA.suggestedAnswers);
+    questionList.push(objQAndA);
+  }
+
+  // get new list of trivia (so we don't have to deal with async)
+  getTriviaFromAPI();
+  //  console.log(questionList);
 }
+
+$(document).ready(function () {
+  getJokeFromAPI();
+  getTriviaFromAPI();
+});
+
+$("#btnJoke").on("click", createJokeArray);
+$("#btnTrivia").on("click", createTriviaArray);
