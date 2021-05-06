@@ -1,6 +1,7 @@
 let jokeList = [];
 let triviaList = [];
 let questionList = [];
+let curQuestionNum = 0;
 
 // https://jservice.io/
 function getTriviaFromAPI() {
@@ -105,10 +106,26 @@ function createTriviaArray() {
   //  console.log(questionList);
 }
 
+function startGame() {
+  timerInterval = 0;
+  curQuestionNum = 0;
+
+  startTimer();
+
+  generateQuestion();
+}
+
 $(document).ready(function () {
   getJokeFromAPI();
   getTriviaFromAPI();
 });
 
-$("#btnJoke").on("click", createJokeArray);
-$("#btnTrivia").on("click", createTriviaArray);
+$("#btnJoke").on("click", function () {
+  createJokeArray();
+  startGame();
+});
+
+$("#btnTrivia").on("click", function () {
+  createTriviaArray();
+  startGame();
+});
