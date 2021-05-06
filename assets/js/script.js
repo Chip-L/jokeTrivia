@@ -1,5 +1,6 @@
 let jokeList = [];
 let triviaList = [];
+let questionList = [];
 
 // https://jservice.io/
 function getTriviaFromAPI() {
@@ -29,7 +30,7 @@ function getJokeFromAPI() {
     .then(function (data) {
       // console.log(data);
       jokeList = data;
-      console.log(jokeList);
+      // console.log(jokeList);
     });
 }
 function shuffleArray(array) {
@@ -50,7 +51,33 @@ $("#btnJoke").on("click", createJokeArray);
 $("#btnTrivia").on("click", createTriviaArray);
 
 function createJokeArray() {
-  //place holder
+  // clear the array from the previous questions
+  questionList = [];
+
+  //populate the initial object
+  for (let i = 0; i < jokeList.length; i++) {
+    let objQAndA = {
+      question: jokeList[i].setup,
+      suggestedAnswers: [jokeList[i].punchline],
+      correctAnswer: jokeList[i].punchline,
+      userChoice: "",
+    };
+
+    // get list of answers (i = correct answer)
+    let randomNum;
+    let randomNumUsed = [i];
+    for (let j = 1; j < 4; j++) {
+      do {
+        randomNum = Math.floor(Math.random() * jokeList.length);
+      } while (randomNumUsed.includes(randomNum));
+      randomNumUsed.push(randomNum);
+      objQAndA.suggestedAnswers.push(jokeList[randomNum].punchline);
+    }
+
+    shuffleArray(objQAndA.suggestedAnswers);
+    questionList.push(objQAndA);
+  }
+  // console.log(questionList);
 }
 
 function createTriviaArray() {
