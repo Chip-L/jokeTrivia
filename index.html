@@ -19,14 +19,21 @@
     <link rel="stylesheet" href="./assets/css/style.css" />
     
   </head>
-  <body class="container">
+  <body class="container" id="mainScreen">
     <header class="container border border-dark rounded mt-3 p-2">
       <h1 class="row justify-content-center">Joke Trivia</h1>
       <div class="d-flex justify-content-center">
-        <button id="btnJoke" class="btn btn-secondary btn-lg m-2">Joke Trivia</button>
-        <button id="btnTrivia" class="btn btn-secondary btn-lg m-2">Trivia Trivia</button>
+        <button id="btnJoke" class="btn btn-secondary btn-lg m-2">
+          Joke Trivia
+        </button>
+        <button id="btnTrivia" class="btn btn-secondary btn-lg m-2">
+          Trivia Trivia
+        </button>
       </div>
     </header>
+    <div id="questionScreen"></div>
+    <div id="finalScoreScreen"></div>
+    <div id="highScoreScreen"></div>
 
     <!-- jQuery -->
     <script
