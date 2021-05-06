@@ -33,17 +33,31 @@ function getJokeFromAPI() {
 }
 
 function generateQuestion() {
-  $("#mainScreen").hide();
-  $("#questionScreen").show();
-  let currentQuestion = $("<div>");
-  currentQuestion.text(questionList.question[0]);
+  let currentQuestion = $("<div>").addClass("current-question");
+  currentQuestion.text(questionList[curQuestionNum].question);
   $("#questionScreen").append(currentQuestion);
+
+  for (
+    let i = 0;
+    i < questionList[curQuestionNum].suggestedAnswers.length;
+    i++
+  ) {
+    let currentAnswer = $("<div>").addClass("current-answer");
+    currentAnswer.text(questionList[curQuestionNum].suggestedAnswers[i]);
+    $(currentQuestion).append(currentAnswer);
+  }
+
+  // questionList.suggestedAnswers.forEach(function (i) {
+  //   let currentAnswer = $("<div>");
+  //   currentAnswer.text(questionList[i].suggestedAnswers);
+  //   $(currentQuestion).append(currentAnswer);
+  // });
 }
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * i);
-    const temp = array[i];
+    let j = Math.floor(Math.random() * i);
+    let temp = array[i];
     array[i] = array[j];
     array[j] = temp;
   }
@@ -110,7 +124,7 @@ function startGame() {
   timerInterval = 0;
   curQuestionNum = 0;
 
-  startTimer();
+  // startTimer();
 
   generateQuestion();
 }
