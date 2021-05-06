@@ -33,8 +33,8 @@ function getJokeFromAPI() {
 }
 
 function generateQuestion() {
-  $("#mainScreen").hide();
-  $("#questionScreen").show();
+  // $("#mainScreen").hide();
+  // $("#questionScreen").show();
   let currentQuestion = $("<div>");
   currentQuestion.text(questionList[0].question);
   $("#questionScreen").append(currentQuestion);
@@ -127,11 +127,18 @@ function showScreen(screenName) {
 
   switch (screenName) {
     case "mainScreen":
-      // mainScreen.attr("display", "flex");
-      // questionScreen.attr("display", "hide");
-      // finalScoreScreen.addClass("hide");
-      // highScoreScreen.addClass("hide");
-
+      mainScreen.show();
+      questionScreen.hide();
+      finalScoreScreen.hide();
+      highScoreScreen.hide();
+      header.hide();
+      break;
+    case "questionScreen":
+      mainScreen.hide();
+      questionScreen.show();
+      finalScoreScreen.hide();
+      highScoreScreen.hide();
+      header.show();
       break;
 
     default:
@@ -144,6 +151,7 @@ function startGame() {
 
   // startTimer();
 
+  showScreen("questionScreen");
   generateQuestion();
 }
 
@@ -165,13 +173,14 @@ function startTimer() {
   }, 1000);
 }
 
-function gameover() {
+function gameOver() {
   //display game over screen
   //display high score input
 }
 $(document).ready(function () {
   getJokeFromAPI();
   getTriviaFromAPI();
+  showScreen("mainScreen");
 });
 
 $("#btnJoke").on("click", function () {
