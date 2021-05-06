@@ -32,6 +32,15 @@ function getJokeFromAPI() {
       console.log(jokeList);
     });
 }
+
+function generateQuestion() {
+  $("#mainScreen").hide();
+  // $("#questionScreen").show();
+  let currentQuestion = $("<div>");
+  currentQuestion.text(questionList.question[0]);
+  $("#questionScreen").append(currentQuestion);
+}
+
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * i);
@@ -56,3 +65,5 @@ function createJokeArray() {
 function createTriviaArray() {
   //place holder
 }
+
+generateQuestion();
