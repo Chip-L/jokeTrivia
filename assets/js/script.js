@@ -4,9 +4,7 @@ let questionList = [];
 
 // https://jservice.io/
 function getTriviaFromAPI() {
-  // let requestURL = "http://jservice.io/api/clues";
   let requestURL = "https://opentdb.com/api.php?amount=10&type=multiple";
-  // let requestURL = "http://jservice.io/api/categories?count=100";
 
   fetch(requestURL)
     .then(function (response) {
@@ -14,8 +12,7 @@ function getTriviaFromAPI() {
     })
     .then(function (data) {
       // console.log(data);
-      triviaList = data;
-      console.log(triviaList.results);
+      triviaList = data.results;
     });
 }
 
@@ -84,5 +81,17 @@ function createJokeArray() {
 }
 
 function createTriviaArray() {
-  //place holder
+  // clear the array from the previous questions
+  questionList = [];
+
+  console.log("triviaList: ", triviaList);
+  //populate the initial object
+  for (let i = 0; i < triviaList.length; i++) {
+    let objQAndA = {
+      question: triviaList[i].setup,
+      suggestedAnswers: [triviaList[i].punchline],
+      correctAnswer: triviaList[i].punchline,
+      userChoice: "",
+    };
+  }
 }
