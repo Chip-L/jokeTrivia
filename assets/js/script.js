@@ -36,8 +36,20 @@ function generateQuestion() {
   $("#mainScreen").hide();
   $("#questionScreen").show();
   let currentQuestion = $("<div>");
-  currentQuestion.text(questionList.question[0]);
+  currentQuestion.text(questionList[0].question);
   $("#questionScreen").append(currentQuestion);
+
+  for (let i = 0; i < questionList[0].suggestedAnswers.length; i++) {
+    let currentAnswer = $("<div>");
+    currentAnswer.text(questionList[0].suggestedAnswers[i]);
+    $(currentQuestion).append(currentAnswer);
+  }
+
+  // questionList.suggestedAnswers.forEach(function (i) {
+  //   let currentAnswer = $("<div>");
+  //   currentAnswer.text(questionList[i].suggestedAnswers);
+  //   $(currentQuestion).append(currentAnswer);
+  // });
 }
 
 function shuffleArray(array) {
@@ -135,6 +147,28 @@ function startGame() {
   generateQuestion();
 }
 
+let timeRemaining = $("#timerDisplay");
+let secondsLeft = 60;
+
+function startTimer() {
+  // Sets interval in variable
+  let timerInterval = setInterval(function () {
+    secondsLeft--;
+    timeRemaining.textContent = secondsLeft;
+
+    if (secondsLeft === 0) {
+      // Stops execution of action at set interval
+      clearInterval(timerInterval);
+      // Calls function to create and append image
+      gameOver();
+    }
+  }, 1000);
+}
+
+function gameover() {
+  //display game over screen
+  //display high score input
+}
 $(document).ready(function () {
   getJokeFromAPI();
   getTriviaFromAPI();
