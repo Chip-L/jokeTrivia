@@ -14,6 +14,7 @@ function getTriviaFromAPI() {
     .then(function (data) {
       // console.log(data);
       triviaList = data;
+      console.log(triviaList.results);
     });
 }
 
@@ -28,7 +29,16 @@ function getJokeFromAPI() {
     .then(function (data) {
       // console.log(data);
       jokeList = data;
+      console.log(jokeList);
     });
+}
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * i);
+    const temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
 }
 
 $(document).ready(function () {
