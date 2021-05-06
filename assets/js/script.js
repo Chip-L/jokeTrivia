@@ -106,11 +106,31 @@ function createTriviaArray() {
   //  console.log(questionList);
 }
 
-function startGame() {
-  timerInterval = 0;
-  curQuestionNum = 0;
+function showScreen(screenName) {
+  let mainScreen = $("#mainScreen");
+  let questionScreen = $("#questionScreen ");
+  let finalScoreScreen = $("#finalScoreScreen ");
+  let highScoreScreen = $("#highScoreScreen ");
+  let header = $("#header");
 
-  startTimer();
+  switch (screenName) {
+    case "mainScreen":
+      // mainScreen.attr("display", "flex");
+      // questionScreen.attr("display", "hide");
+      // finalScoreScreen.addClass("hide");
+      // highScoreScreen.addClass("hide");
+
+      break;
+
+    default:
+      break;
+  }
+}
+function startGame() {
+  // timerInterval = 0;
+  // curQuestionNum = 0;
+
+  // startTimer();
 
   generateQuestion();
 }
