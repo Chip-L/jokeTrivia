@@ -45,3 +45,14 @@ $(document).ready(function () {
   getJokeFromAPI();
   getTriviaFromAPI();
 });
+
+$("#btnJoke").on("click", createJokeArray);
+$("#btnTrivia").on("click", createTriviaArray);
+
+function createJokeArray() {
+  //place holder
+}
+
+function createTriviaArray() {
+  //place holder
+}
