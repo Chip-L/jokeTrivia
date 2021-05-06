@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-:root {
+<<<<<<< HEAD :root {
   --light-beaver-gray: #bcb4ac;
   --pewter-light: #848484;
   --pewter-gray: #6c6c6c;
@@ -15,32 +14,29 @@ header {
 h2 {
   padding: 0 10px 0 10px;
 }
-=======
-:root {
---light-beaver-gray: #bcb4ac;
---pewter-light: #848484;
---pewter-gray: #6c6c6c;
---dark-shell-pink: #a14b51;
---very-dark-cocoa:#624b45;
---black: #000000;
+======= :root {
+  --light-beaver-gray: #bcb4ac;
+  --pewter-light: #848484;
+  --pewter-gray: #6c6c6c;
+  --dark-shell-pink: #a14b51;
+  --very-dark-cocoa: #624b45;
+  --black: #000000;
 }
 
 html body {
-    height: 100%;
-  }
-  
-.parallax {
-/* The image used */
-background-image: url("https://cdn.pixabay.com/photo/2017/02/01/22/02/mountain-landscape-2031539_960_720.jpg");
-
-/* Full height */
-height: 100%;
-
-/* Create the parallax scrolling effect */
-background-attachment: fixed;
-background-position: center;
-background-repeat: no-repeat;
-background-size: cover;
+  height: 100%;
 }
 
->>>>>>> main
+.parallax {
+  /* The image used */
+  background-image: url("https://cdn.pixabay.com/photo/2017/02/01/22/02/mountain-landscape-2031539_960_720.jpg");
+
+  /* Full height */
+  height: 100%;
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
