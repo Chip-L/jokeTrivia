@@ -70,6 +70,13 @@ button {
   font-family: "Carrois Gothic", sans-serif;
 }
 
+.gameOverForm {
+  background-color: var(--dark-shell-pink);
+  color: white;
+  padding: 1%;
+  border-radius: 1%;
+}
+
 .parallax {
   /* Background Image */
   background-image: url("https://cdn.pixabay.com/photo/2020/05/29/13/55/abandon-5235255_960_720.jpg");

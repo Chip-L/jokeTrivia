@@ -230,9 +230,9 @@ function getInitials() {
   $(formContainer).append(finalScoreHeader);
   $(finalScoreHeader).append("<form id='initial-form'></form>");
   $("#initial-form").append(
-    "<label for='initial-input'>Enter Your Initials: </label>"
+    "<label for='initial-input'>Enter Your Initials:</label>"
   );
-  $("#initial-form").append("<input type='text' name='initial-input'>");
+  $("#initial-form").append("<input type='text' name='initial-input' class='ms-1'>");
   $("#initial-form").append("<button id='btnSubmit'>Submit Score</button>");
   $("#initial-form").on("submit", function (event) {
     storeHighScore(event);
