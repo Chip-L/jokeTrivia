@@ -37,7 +37,7 @@ function getJokeFromAPI() {
 function generateQuestion() {
   $("#questionScreen").text("");
 
-  let currentQuestion = $("<div>").addClass("current-question");
+  let currentQuestion = $("<div>").addClass("current-question h2");
   currentQuestion.text(questionList[curQuestionNum].question);
   $("#questionScreen").append(currentQuestion);
   let currentList = $("<ul>").addClass("answer-list");
