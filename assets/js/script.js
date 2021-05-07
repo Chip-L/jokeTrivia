@@ -2,7 +2,7 @@ let jokeList = [];
 let triviaList = [];
 let questionList = [];
 let curQuestionNum = 0;
-let userScore = 0;
+let userScore;
 
 // https://jservice.io/
 function getTriviaFromAPI() {
@@ -55,7 +55,7 @@ function generateQuestion() {
     .children()
     .on("click", function () {
       let userAnswer = this.textContent;
-      if (userAnswer === questionList.correctAnswer) {
+      if (userAnswer === questionList[curQuestionNum].correctAnswer) {
         userScore++;
       }
       curQuestionNum++;
@@ -157,10 +157,16 @@ function showScreen(screenName) {
   }
 }
 function startGame() {
+<<<<<<< HEAD
   // timerInterval = 0;
   // curQuestionNum = 0;
+=======
+  timerInterval = 0;
+  curQuestionNum = 0;
+  userScore = 0;
+>>>>>>> main
 
-  // startTimer();
+  startTimer();
 
   showScreen("questionScreen");
   generateQuestion();
