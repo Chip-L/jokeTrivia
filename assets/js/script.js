@@ -157,14 +157,9 @@ function showScreen(screenName) {
   }
 }
 function startGame() {
-<<<<<<< HEAD
-  // timerInterval = 0;
-  // curQuestionNum = 0;
-=======
   timerInterval = 0;
   curQuestionNum = 0;
   userScore = 0;
->>>>>>> main
 
   startTimer();
 
