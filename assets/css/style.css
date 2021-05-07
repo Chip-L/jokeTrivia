@@ -7,7 +7,7 @@
   --black: #000000;
 }
 
-html body {
+body, html {
   height: 100%;
 }
 
