@@ -23,6 +23,10 @@ h2 {
   font-family: "Chelsea Market", cursive;
 }
 
+button {
+  font-family: "Carrois Gothic", sans-serif;
+}
+
 .current-question {
   font-family: "Chelsea Market", cursive;
 }
@@ -43,4 +47,10 @@ h2 {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+@media only screen and (max-width: 768px) {
+  #jokeTriviaFull {
+    display: none;
+  }
 }
