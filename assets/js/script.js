@@ -232,8 +232,12 @@ function getInitials() {
   $("#initial-form").append(
     "<label for='initial-input'>Enter Your Initials:</label>"
   );
-  $("#initial-form").append("<input type='text' name='initial-input' class='ms-2'>");
-  $("#initial-form").append("<button id='btnSubmit'>Submit Score</button>");
+  $("#initial-form").append(
+    "<input type='text' name='initial-input' class='ms-2'>"
+  );
+  $("#initial-form").append(
+    "<button class='btn btn-dark btn-lg ms-3' id='btnSubmit'>Submit Score</button>"
+  );
   $("#initial-form").on("submit", function (event) {
     storeHighScore(event);
   });
