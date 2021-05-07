@@ -129,13 +129,46 @@ function createTriviaArray() {
   //  console.log(questionList);
 }
 
+function showScreen(screenName) {
+  let mainScreen = $("#mainScreen");
+  let questionScreen = $("#questionScreen ");
+  let finalScoreScreen = $("#finalScoreScreen ");
+  let highScoreScreen = $("#highScoreScreen ");
+  let header = $("#header");
+
+  switch (screenName) {
+    case "mainScreen":
+      mainScreen.attr("style", "display: flex");
+      questionScreen.attr("style", "display: none");
+      finalScoreScreen.attr("style", "display: none");
+      highScoreScreen.attr("style", "display: none");
+      header.attr("style", "display: none");
+      break;
+    case "questionScreen":
+      mainScreen.attr("style", "display: none");
+      questionScreen.attr("style", "display: block");
+      finalScoreScreen.attr("style", "display: none");
+      highScoreScreen.attr("style", "display: none");
+      header.attr("style", "display: flex");
+      break;
+
+    default:
+      break;
+  }
+}
 function startGame() {
+<<<<<<< HEAD
+  // timerInterval = 0;
+  // curQuestionNum = 0;
+=======
   timerInterval = 0;
   curQuestionNum = 0;
   userScore = 0;
+>>>>>>> main
 
   startTimer();
 
+  showScreen("questionScreen");
   generateQuestion();
 }
 
@@ -157,13 +190,14 @@ function startTimer() {
   }, 1000);
 }
 
-function gameover() {
+function gameOver() {
   //display game over screen
   //display high score input
 }
 $(document).ready(function () {
   getJokeFromAPI();
   getTriviaFromAPI();
+  showScreen("mainScreen");
 });
 
 $("#btnJoke").on("click", function () {
