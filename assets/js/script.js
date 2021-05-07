@@ -129,6 +129,7 @@ function createTriviaArray() {
   //  console.log(questionList);
 }
 
+// show or hide the screen based on the div ID
 function showScreen(screenName) {
   let mainScreen = $("#mainScreen");
   let questionScreen = $("#questionScreen ");
@@ -138,21 +139,32 @@ function showScreen(screenName) {
 
   switch (screenName) {
     case "mainScreen":
-      mainScreen.attr("style", "display: flex");
-      questionScreen.attr("style", "display: none");
-      finalScoreScreen.attr("style", "display: none");
-      highScoreScreen.attr("style", "display: none");
-      header.attr("style", "display: none");
+      mainScreen.collapse("show");
+      questionScreen.collapse("hide");
+      finalScoreScreen.collapse("hide");
+      highScoreScreen.collapse("hide");
+      header.collapse("hide");
       break;
     case "questionScreen":
-      mainScreen.attr("style", "display: none");
-      questionScreen.attr("style", "display: block");
-      finalScoreScreen.attr("style", "display: none");
-      highScoreScreen.attr("style", "display: none");
-      header.attr("style", "display: flex");
+      mainScreen.collapse("hide");
+      questionScreen.collapse("show");
+      finalScoreScreen.collapse("hide");
+      highScoreScreen.collapse("hide");
+      header.collapse("show");
       break;
-
-    default:
+    case "finalScoreScreen":
+      mainScreen.collapse("hide");
+      questionScreen.collapse("hide");
+      finalScoreScreen.collapse("hide");
+      highScoreScreen.collapse("hide");
+      header.collapse("show");
+      break;
+    case "highScoreScreen":
+      mainScreen.collapse("hide");
+      questionScreen.collapse("show");
+      finalScoreScreen.collapse("hide");
+      highScoreScreen.collapse("hide");
+      header.collapse("show");
       break;
   }
 }
