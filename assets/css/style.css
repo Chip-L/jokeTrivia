@@ -87,6 +87,14 @@ button {
   background-size: cover;
 }
 
+.game-over {
+  height: 125px;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1%
+}
+
 @media only screen and (max-width: 768px) {
   #jokeTriviaFull {
     display: none;
