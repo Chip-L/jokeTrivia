@@ -9,11 +9,6 @@
   
 .light {
   background-color: var(--light-beaver-gray);
-  
-  }
-  
-.grey-light {
-  background-color: var(--pewter-light);
   }
 
 .red {
@@ -34,8 +29,9 @@
   width: auto;
 }
 
-.rounded-edges {
-  border-radius: 1%;
+.header-top {
+  background-color: var(--pewter-light);
+  border-radius: 5px;
 }
 
 html body {
@@ -63,11 +59,18 @@ button {
   color: white;
   background-color: var(--dark-shell-pink);
   padding: 1%;
-  border-radius: 1%;
+  border-radius: 5px;
 }
 
 .answer-list {
   font-family: "Carrois Gothic", sans-serif;
+}
+
+.gameOverForm {
+  background-color: var(--dark-shell-pink);
+  color: white;
+  padding: 1%;
+  border-radius: 5px;
 }
 
 .parallax {
