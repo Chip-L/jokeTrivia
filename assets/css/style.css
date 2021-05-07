@@ -1,28 +1,28 @@
 :root   {
---light-beaver-gray: #bcb4ac; /* light */
---pewter-light: #848484; /* grey-light */
---pewter-gray: #6c6c6c; /* grey */
---dark-shell-pink: #a14b51; /* red */
---very-dark-cocoa: #624b45; /* cocoa */
---black: #000000; /* dark */
-}
-
-.light {
-background-color: var(--light-beaver-gray);
-
-}
-
-.grey-light {
-background-color: var(--pewter-light);
-}
-
-.opacity-cell {
-opacity: 0.7;
-}
-
-.opacity-full {
-opacity: 1;
-}
+  --light-beaver-gray: #bcb4ac; /* light */
+  --pewter-light: #848484; /* grey-light */
+  --pewter-gray: #6c6c6c; /* grey */
+  --dark-shell-pink: #a14b51; /* red */
+  --very-dark-cocoa: #624b45; /* cocoa */
+  --black: #000000; /* dark */
+  }
+  
+  .light {
+  background-color: var(--light-beaver-gray);
+  
+  }
+  
+  .grey-light {
+  background-color: var(--pewter-light);
+  }
+  
+  .opacity-cell {
+  opacity: 0.7;
+  }
+  
+  .opacity-full {
+  opacity: 1;
+  }
 
 #logo {
   display: block;
