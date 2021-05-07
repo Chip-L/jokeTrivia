@@ -267,7 +267,6 @@ function showHighScores() {
 
   // add tab names
   let jokeTab = $("<li>").addClass("nav-item").attr("role", "presentation");
-
   let triviaTab = $("<li>").addClass("nav-item").attr("role", "presentation");
 
   // add links to the tab that will display when clicked (these are to divs)
@@ -279,7 +278,7 @@ function showHighScores() {
     .attr("type", "button")
     .attr("role", "tab")
     .attr("aria-controls", "jokeTable")
-    // .attr("aria-selected", "false")
+    // .attr("aria-selected", "false") <---- set when selecting active panel
     .text("Joke Trivia");
 
   let triviaTabLink = $("<button>")
@@ -290,7 +289,7 @@ function showHighScores() {
     .attr("type", "button")
     .attr("role", "tab")
     .attr("aria-controls", "triviaTable")
-    // .attr("aria-selected", "false")
+    // .attr("aria-selected", "false") <---- set when selecting active panel
     .text("Trivia Trivia");
 
   // add links to the tabs and tabs to the list
@@ -341,6 +340,17 @@ function showHighScores() {
   // add everything to the page
   $("#highScoreScreen").append(tabList);
   $("#highScoreScreen").append(tabContent);
+
+  let playAgain = $("<button>");
+  playAgain.text("Play Again");
+  playAgain.on("click", function () {
+    showScreen("mainScreen");
+  });
+
+  // add everything to the page
+  $("#highScoreScreen").append(tabList);
+  $("#highScoreScreen").append(tabContent);
+  $("#highScoreScreen").append(playAgain);
 }
 
 // takes in an array and returns a jQuery table object
