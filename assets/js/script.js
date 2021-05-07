@@ -43,7 +43,7 @@ function generateQuestion() {
   $("#questionScreen").text("");
 
   let currentQuestion = $("<div>").addClass("current-question h2");
-  currentQuestion.text(questionList[curQuestionNum].question);
+  currentQuestion.html(questionList[curQuestionNum].question);
   $("#questionScreen").append(currentQuestion);
   let currentList = $("<ul>").addClass("answer-list h3 list-group");
 
@@ -53,7 +53,7 @@ function generateQuestion() {
     i++
   ) {
     let currentAnswer = $("<li>").addClass("current-answer list-group-item");
-    currentAnswer.text(questionList[curQuestionNum].suggestedAnswers[i]);
+    currentAnswer.html(questionList[curQuestionNum].suggestedAnswers[i]);
     $(currentList).append(currentAnswer);
   }
   $("#questionScreen").append(currentList);
@@ -221,7 +221,9 @@ function getInitials() {
   clearInterval(timerInterval);
   let formContainer = $("<div>").addClass("gameOverForm");
   $("#finalScoreScreen").append(formContainer);
-  $(formContainer).append("<h1><img class='game-over' src='./assets/images/game-over.png'></h1>");
+  $(formContainer).append(
+    "<h1><img class='game-over' src='./assets/images/game-over.png'></h1>"
+  );
   let finalScoreHeader = $("<h2>");
   finalScoreHeader.text("Final Score: " + userScore);
   let timeLeft = $("<h2>");
@@ -253,6 +255,12 @@ function storeHighScore(event) {
   };
   console.log(scoreObject);
   scoreList.unshift(scoreObject);
+
+  scoreList.sort(function (a, b) {
+    return b.score - a.score;
+  });
+  scoreList.length = 10;
+  console.log(scoreList);
 
   localStorage.setItem(gameName, JSON.stringify(scoreList));
   showHighScores();
