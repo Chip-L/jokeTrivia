@@ -43,7 +43,7 @@ function generateQuestion() {
   $("#questionScreen").text("");
 
   let currentQuestion = $("<div>").addClass("current-question h2");
-  currentQuestion.text(questionList[curQuestionNum].question);
+  currentQuestion.html(questionList[curQuestionNum].question);
   $("#questionScreen").append(currentQuestion);
   let currentList = $("<ul>").addClass("answer-list h3 list-group");
 
@@ -53,7 +53,7 @@ function generateQuestion() {
     i++
   ) {
     let currentAnswer = $("<li>").addClass("current-answer list-group-item");
-    currentAnswer.text(questionList[curQuestionNum].suggestedAnswers[i]);
+    currentAnswer.html(questionList[curQuestionNum].suggestedAnswers[i]);
     $(currentList).append(currentAnswer);
   }
   $("#questionScreen").append(currentList);
