@@ -231,7 +231,25 @@ function getInitials() {
     "<label for='initial-input'>Enter Your Initials: </label>"
   );
   $("#initial-form").append("<input type='text' name='initial-input'>");
-  $("#initial-form").append("<button>Submit Score</button>");
+  $("#initial-form").append("<button id='btnSubmit'>Submit Score</button>");
+  $("#initial-form").on("submit", function (event) {
+    storeHighScore(event);
+  });
+}
+
+function storeHighScore(event) {
+  event.preventDefault();
+  let scoreList = getHighScores(gameName);
+  let scoreObject = {
+    name: $("#initial-form input").val(),
+    score: userScore,
+    time: secondsLeft,
+  };
+  console.log(scoreObject);
+  scoreList.unshift(scoreObject);
+
+  localStorage.setItem(gameName, JSON.stringify(scoreList));
+  showHighScores();
 }
 
 function showHighScores() {
