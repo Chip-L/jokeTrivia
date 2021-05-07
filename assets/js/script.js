@@ -40,14 +40,14 @@ function generateQuestion() {
   let currentQuestion = $("<div>").addClass("current-question h2");
   currentQuestion.text(questionList[curQuestionNum].question);
   $("#questionScreen").append(currentQuestion);
-  let currentList = $("<ul>").addClass("answer-list");
+  let currentList = $("<ul>").addClass("answer-list h3 list-group");
 
   for (
     let i = 0;
     i < questionList[curQuestionNum].suggestedAnswers.length;
     i++
   ) {
-    let currentAnswer = $("<li>").addClass("current-answer");
+    let currentAnswer = $("<li>").addClass("current-answer list-group-item");
     currentAnswer.text(questionList[curQuestionNum].suggestedAnswers[i]);
     $(currentList).append(currentAnswer);
   }
