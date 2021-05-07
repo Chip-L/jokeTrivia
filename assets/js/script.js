@@ -221,7 +221,9 @@ function getInitials() {
   clearInterval(timerInterval);
   let formContainer = $("<div>").addClass("gameOverForm");
   $("#finalScoreScreen").append(formContainer);
-  $(formContainer).append("<h1><img class='game-over' src='./assets/images/game-over.png'></h1>");
+  $(formContainer).append(
+    "<h1><img class='game-over' src='./assets/images/game-over.png'></h1>"
+  );
   let finalScoreHeader = $("<h2>");
   finalScoreHeader.text("Final Score: " + userScore);
   let timeLeft = $("<h2>");
@@ -253,6 +255,12 @@ function storeHighScore(event) {
   };
   console.log(scoreObject);
   scoreList.unshift(scoreObject);
+
+  scoreList.sort(function (a, b) {
+    return b.score - a.score;
+  });
+  scoreList.length = 10;
+  console.log(scoreList);
 
   localStorage.setItem(gameName, JSON.stringify(scoreList));
   showHighScores();
