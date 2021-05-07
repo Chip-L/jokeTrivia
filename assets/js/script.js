@@ -261,7 +261,7 @@ function showHighScores() {
   tabList.append(triviaTab);
 
   // add content divs
-  let tabContent = $("<div>").attr(("class" = "tab-content"));
+  let tabContent = $("<div>").attr(("class", "tab-content"));
 
   let jokeDiv = $("<div>")
     .attr("class", "tab-pane fade")
