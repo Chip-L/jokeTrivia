@@ -172,10 +172,10 @@ function showScreen(screenName) {
       break;
     case "highScoreScreen":
       mainScreen.collapse("hide");
-      questionScreen.collapse("show");
+      questionScreen.collapse("hide");
       finalScoreScreen.collapse("hide");
-      highScoreScreen.collapse("hide");
-      header.collapse("show");
+      highScoreScreen.collapse("show");
+      header.collapse("hide");
       break;
   }
 }
@@ -267,22 +267,43 @@ function storeHighScore(event) {
 }
 
 function showHighScores() {
-  $("#highScoreScreen").append("<h1 class='highScore-header>High Scores</h1>");
+  showScreen("highScoreScreen");
+
+  let highScoreDiv = $("<div>").attr("id", "highScore-header");
+  let highScoreH1 = $("<h1>").addClass("highScore-text").text("High Scores");
+  highScoreDiv.append(highScoreH1);
+  $("#highScoreScreen").append(highScoreDiv);
 
   // create the tabs
-  let tabList = $("<ul>").addClass("nav nav-tabs nav-justified");
+  let tabList = $("<ul>")
+    .addClass("nav nav-tabs nav-justified")
+    .attr("role", "tablist");
+
   // add tab names
-  let jokeTab = $("<li>");
-  let triviaTab = $("<li>");
+  let jokeTab = $("<li>").addClass("nav-item").attr("role", "presentation");
+  let triviaTab = $("<li>").addClass("nav-item").attr("role", "presentation");
+
   // add links to the tab that will display when clicked (these are to divs)
-  let jokeTabLink = $("<a>")
-    .attr("data-toggle", "tab")
-    .attr("href", "#jokeTable")
+  let jokeTabLink = $("<button>")
+    .addClass("nav-link")
+    .attr("id", "jokeTable-tab")
+    .attr("data-bs-toggle", "tab")
+    .attr("data-bs-target", "#jokeTable")
+    .attr("type", "button")
+    .attr("role", "tab")
+    .attr("aria-controls", "jokeTable")
+    // .attr("aria-selected", "false") <---- set when selecting active panel
     .text("Joke Trivia");
 
-  let triviaTabLink = $("<a>")
-    .attr("data-toggle", "tab")
-    .attr("href", "#triviaTable")
+  let triviaTabLink = $("<button>")
+    .addClass("nav-link")
+    .attr("id", "triviaTable-tab")
+    .attr("data-bs-toggle", "tab")
+    .attr("data-bs-target", "#triviaTable")
+    .attr("type", "button")
+    .attr("role", "tab")
+    .attr("aria-controls", "triviaTable")
+    // .attr("aria-selected", "false") <---- set when selecting active panel
     .text("Trivia Trivia");
 
   // add links to the tabs and tabs to the list
@@ -293,39 +314,57 @@ function showHighScores() {
   tabList.append(triviaTab);
 
   // add content divs
-  let tabContent = $("<div>").attr(("class", "tab-content"));
+  let tabContent = $("<div>");
+  tabContent.addClass("tab-content");
 
   let jokeDiv = $("<div>")
-    .attr("class", "tab-pane fade")
-    .attr("id", "jokeTable");
+    .addClass("tab-pane fade")
+    .attr("id", "jokeTable")
+    .attr("role", "tabpanel")
+    .attr("aria-labelledby", "jokeTable-tab");
 
   let triviaDiv = $("<div>")
-    .attr("class", "tab-pane fade")
-    .attr("id", "triviaTable");
+    .addClass("tab-pane fade")
+    .attr("id", "triviaTable")
+    .attr("role", "tabpanel")
+    .attr("aria-labelledby", "triviaTable-tab");
 
   // add content to the divs and divs to the container
-  jokeDiv.append(getTable(getHighScores(jokeTrivia)));
-  triviaDiv.append(getTable(getHighScores(triviaTrivia)));
+  jokeDiv.append(getTable(getHighScores("joke trivia")));
+  triviaDiv.append(getTable(getHighScores("trivia trivia")));
+
+  console.log(tabContent);
 
   tabContent.append(jokeDiv);
   tabContent.append(triviaDiv);
 
   // select active tab and div based off of last game played
   if (gameName === "trivia trivia") {
-    triviaTab.addClass("active");
-    jokeTab.removeClass("active");
-    triviaDiv.addClass("active");
-    jokeDiv.removeClass("active");
+    triviaTabLink.addClass("active").attr("aria-selected", "true");
+    jokeTabLink.removeClass("active").attr("aria-selected", "false");
+    triviaDiv.addClass("show active");
+    jokeDiv.removeClass("show active");
   } else {
-    triviaTab.removeClass("active");
-    jokeTab.addClass("active");
-    triviaDiv.removeClass("active");
-    jokeDiv.addClass("active");
+    jokeTabLink.addClass("active").attr("aria-selected", "true");
+    triviaTabLink.removeClass("active").attr("aria-selected", "false");
+    jokeDiv.addClass("show active");
+    triviaDiv.removeClass("show active");
   }
 
   // add everything to the page
   $("#highScoreScreen").append(tabList);
   $("#highScoreScreen").append(tabContent);
+
+  let playAgain = $("<button>");
+  playAgain.text("Play Again");
+  playAgain.on("click", function () {
+    showScreen("mainScreen");
+  });
+
+  // add everything to the page
+  $("#highScoreScreen").append(tabList);
+  $("#highScoreScreen").append(tabContent);
+  $("#highScoreScreen").append(playAgain);
 }
 
 // takes in an array and returns a jQuery table object
@@ -333,7 +372,7 @@ function getTable(arrData) {
   let table = $("<table>");
 
   // -1 is the table header
-  for (let i = -1; i < data.length; i++) {
+  for (let i = -1; i < arrData.length; i++) {
     let tr = $("<tr>");
     let name;
     let score;
