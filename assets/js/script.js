@@ -55,22 +55,21 @@ function generateQuestion() {
     $(currentList).append(currentAnswer);
   }
   $("#questionScreen").append(currentList);
-  $(currentList)
-    .children()
-    .on("click", function () {
-      let userAnswer = this.textContent;
-      if (userAnswer === questionList[curQuestionNum].correctAnswer) {
-        userScore++;
-      }
-      curQuestionNum++;
+  $(currentList).children().on("click", checkAnswer);
+}
 
-      console.log(curQuestionNum, "/", questionList.length);
-      if (curQuestionNum < questionList.length) {
-        generateQuestion();
-      } else {
-        gameOver();
-      }
-    });
+function checkAnswer() {
+  let userAnswer = this.textContent;
+  if (userAnswer === questionList[curQuestionNum].correctAnswer) {
+    userScore++;
+  }
+  curQuestionNum++;
+  // console.log(curQuestionNum);
+  if (curQuestionNum < questionList.length) {
+    generateQuestion();
+  } else {
+    gameOver();
+  }
 }
 
 function shuffleArray(array) {
@@ -210,9 +209,25 @@ function startTimer() {
 function gameOver() {
   //display game over screen
   //display high score input
+
   console.log("gameOver");
   showScreen("finalScoreScreen");
+  getInitials();
 }
+
+function getInitials() {
+  $("#finalScoreScreen").append("<h1>GAME OVER!</h1>");
+  let finalScoreHeader = $("<h2>");
+  finalScoreHeader.text("Final Score: " + userScore);
+  $("#finalScoreScreen").append(finalScoreHeader);
+  $(finalScoreHeader).append("<form id='initial-form'></form>");
+  $("#initial-form").append(
+    "<label for='initial-input'>Enter Your Initials: </label>"
+  );
+  $("#initial-form").append("<input type='text' name='initial-input'>");
+  $("#initial-form").append("<button>Submit Score</button>");
+}
+
 $(document).ready(function () {
   getJokeFromAPI();
   getTriviaFromAPI();
