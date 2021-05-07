@@ -239,12 +239,17 @@ function getInitials() {
 
 function storeHighScore(event) {
   event.preventDefault();
+  let scoreList = getHighScores(gameName);
   let scoreObject = {
     name: $("#initial-form input").val(),
     score: userScore,
     time: secondsLeft,
   };
   console.log(scoreObject);
+  scoreList.unshift(scoreObject);
+
+  localStorage.setItem(gameName, JSON.stringify(scoreList));
+  showHighScores();
 }
 
 function showHighScores() {
