@@ -1,11 +1,32 @@
-:root {
-  --light-beaver-gray: #bcb4ac;
-  --pewter-light: #848484;
-  --pewter-gray: #6c6c6c;
-  --dark-shell-pink: #a14b51;
-  --very-dark-cocoa: #624b45;
-  --black: #000000;
-}
+:root   {
+  --light-beaver-gray: #bcb4ac; /* light */
+  --pewter-light: #848484; /* grey-light */
+  --pewter-gray: #6c6c6c; /* grey */
+  --dark-shell-pink: #a14b51; /* red */
+  --very-dark-cocoa: #624b45; /* cocoa */
+  --black: #000000; /* dark */
+  }
+  
+  .light {
+  background-color: var(--light-beaver-gray);
+  
+  }
+  
+  .grey-light {
+  background-color: var(--pewter-light);
+  }
+
+  .red {
+  background-color: var(--dark-shell-pink);
+  }
+  
+  .opacity-cell {
+  opacity: 0.7;
+  }
+  
+  .opacity-full {
+  opacity: 1;
+  }
 
 #logo {
   display: block;
@@ -35,6 +56,7 @@ button {
 
 .current-question {
   font-family: "Chelsea Market", cursive;
+  color: white;
 }
 
 .answer-list {
