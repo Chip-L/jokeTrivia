@@ -282,9 +282,13 @@ function showHighScores() {
   if (gameName === "trivia trivia") {
     triviaTab.addClass("active");
     jokeTab.removeClass("active");
+    triviaDiv.addClass("active");
+    jokeDiv.removeClass("active");
   } else {
     triviaTab.removeClass("active");
     jokeTab.addClass("active");
+    triviaDiv.removeClass("active");
+    jokeDiv.addClass("active");
   }
 
   // add everything to the page
@@ -307,9 +311,9 @@ function getTable(arrData) {
       score = $("<th>").text("Score");
       time = $("<th>").text("Time");
     } else {
-      name = $("<td>").text(arrData.name);
-      score = $("<td>").text(arrData.score);
-      time = $("<td>").text(arrData.time);
+      name = $("<td>").text(arrData[i].name);
+      score = $("<td>").text(arrData[i].score);
+      time = $("<td>").text(arrData[i].time);
     }
     tr.append(name);
     tr.append(score);
