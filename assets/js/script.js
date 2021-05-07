@@ -5,7 +5,7 @@ let curQuestionNum = 0;
 let userScore;
 let secondsLeft;
 
-// get the list from local storage
+// get the list from local storage - pass in the key to the list we want
 let getHighScores = (key) => JSON.parse(localStorage.getItem(key)) || [];
 
 // https://jservice.io/
