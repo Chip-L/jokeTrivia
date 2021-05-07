@@ -211,14 +211,14 @@ function startTimer() {
 function gameOver() {
   //display game over screen
   //display high score input
-
+  clearInterval(timerInterval);
   console.log("gameOver");
   showScreen("finalScoreScreen");
   getInitials();
 }
 
 function getInitials() {
-  clearInterval(timerInterval);
+  $("#finalScoreScreen").text("");
   let formContainer = $("<div>").addClass("gameOverForm");
   $("#finalScoreScreen").append(formContainer);
   $(formContainer).append(
