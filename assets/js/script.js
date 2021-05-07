@@ -4,6 +4,7 @@ let questionList = [];
 let curQuestionNum = 0;
 let userScore;
 let secondsLeft;
+let timerInterval;
 
 // get the list from local storage - pass in the key to the list we want
 let getHighScores = (key) => JSON.parse(localStorage.getItem(key)) || [];
@@ -193,7 +194,7 @@ function startTimer() {
   let timeRemaining = $("#timerDisplay");
 
   // Sets interval in variable
-  let timerInterval = setInterval(function () {
+  timerInterval = setInterval(function () {
     secondsLeft--;
     timeRemaining.text(secondsLeft);
 
@@ -216,9 +217,13 @@ function gameOver() {
 }
 
 function getInitials() {
+  clearInterval(timerInterval);
   $("#finalScoreScreen").append("<h1>GAME OVER!</h1>");
   let finalScoreHeader = $("<h2>");
   finalScoreHeader.text("Final Score: " + userScore);
+  let timeLeft = $("<h2>");
+  timeLeft.text("Time Left: " + secondsLeft + " seconds");
+  $("#finalScoreScreen").append(timeLeft);
   $("#finalScoreScreen").append(finalScoreHeader);
   $(finalScoreHeader).append("<form id='initial-form'></form>");
   $("#initial-form").append(
