@@ -127,18 +127,18 @@ function showScreen(screenName) {
 
   switch (screenName) {
     case "mainScreen":
-      mainScreen.show();
-      questionScreen.hide();
-      finalScoreScreen.hide();
-      highScoreScreen.hide();
-      header.hide();
+      mainScreen.attr("style", "display: flex");
+      questionScreen.attr("style", "display: none");
+      finalScoreScreen.attr("style", "display: none");
+      highScoreScreen.attr("style", "display: none");
+      header.attr("style", "display: none");
       break;
     case "questionScreen":
-      mainScreen.hide();
-      questionScreen.show();
-      finalScoreScreen.hide();
-      highScoreScreen.hide();
-      header.show();
+      mainScreen.attr("style", "display: none");
+      questionScreen.attr("style", "display: block");
+      finalScoreScreen.attr("style", "display: none");
+      highScoreScreen.attr("style", "display: none");
+      header.attr("style", "display: flex");
       break;
 
     default:
