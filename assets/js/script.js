@@ -5,6 +5,9 @@ let curQuestionNum = 0;
 let userScore;
 let secondsLeft;
 
+// get the list from local storage
+let getHighScores = (key) => JSON.parse(localStorage.getItem(key)) || [];
+
 // https://jservice.io/
 function getTriviaFromAPI() {
   let requestURL = "https://opentdb.com/api.php?amount=10&type=multiple";
