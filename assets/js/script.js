@@ -216,15 +216,11 @@ function gameOver() {
 }
 
 function getInitials() {
-  // let gameoverHeader = $("<h1 class='gameover-header'>GAME OVER!</h1>");
-  // let gameoverHeader = $("<h1>GAME OVER!</h1>");
   $("#finalScoreScreen").append("<h1>GAME OVER!</h1>");
   let finalScoreHeader = $("<h2>");
   finalScoreHeader.text("Final Score: " + userScore);
   $("#finalScoreScreen").append(finalScoreHeader);
-  // let initialForm = $("<form id='initial-form'></form>");
   $(finalScoreHeader).append("<form id='initial-form'></form>");
-  // let initialInput = $("<input>");
   $("#initial-form").append(
     "<label for='initial-input'>Enter Your Initials: </label>"
   );
