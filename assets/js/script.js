@@ -3,6 +3,7 @@ let triviaList = [];
 let questionList = [];
 let curQuestionNum = 0;
 let userScore;
+let secondsLeft;
 
 // https://jservice.io/
 function getTriviaFromAPI() {
@@ -59,7 +60,13 @@ function generateQuestion() {
         userScore++;
       }
       curQuestionNum++;
-      generateQuestion();
+
+      console.log(curQuestionNum, "/", questionList.length);
+      if (curQuestionNum < questionList.length) {
+        generateQuestion();
+      } else {
+        gameOver();
+      }
     });
 }
 
@@ -129,6 +136,7 @@ function createTriviaArray() {
   //  console.log(questionList);
 }
 
+// show or hide the screen based on the div ID
 function showScreen(screenName) {
   let mainScreen = $("#mainScreen");
   let questionScreen = $("#questionScreen ");
@@ -138,33 +146,40 @@ function showScreen(screenName) {
 
   switch (screenName) {
     case "mainScreen":
-      mainScreen.attr("style", "display: flex");
-      questionScreen.attr("style", "display: none");
-      finalScoreScreen.attr("style", "display: none");
-      highScoreScreen.attr("style", "display: none");
-      header.attr("style", "display: none");
+      mainScreen.collapse("show");
+      questionScreen.collapse("hide");
+      finalScoreScreen.collapse("hide");
+      highScoreScreen.collapse("hide");
+      header.collapse("hide");
       break;
     case "questionScreen":
-      mainScreen.attr("style", "display: none");
-      questionScreen.attr("style", "display: block");
-      finalScoreScreen.attr("style", "display: none");
-      highScoreScreen.attr("style", "display: none");
-      header.attr("style", "display: flex");
+      mainScreen.collapse("hide");
+      questionScreen.collapse("show");
+      finalScoreScreen.collapse("hide");
+      highScoreScreen.collapse("hide");
+      header.collapse("show");
       break;
-
-    default:
+    case "finalScoreScreen":
+      mainScreen.collapse("hide");
+      questionScreen.collapse("hide");
+      finalScoreScreen.collapse("show");
+      highScoreScreen.collapse("hide");
+      header.collapse("show");
+      break;
+    case "highScoreScreen":
+      mainScreen.collapse("hide");
+      questionScreen.collapse("show");
+      finalScoreScreen.collapse("hide");
+      highScoreScreen.collapse("hide");
+      header.collapse("show");
       break;
   }
 }
+
 function startGame() {
-<<<<<<< HEAD
-  // timerInterval = 0;
-  // curQuestionNum = 0;
-=======
-  timerInterval = 0;
+  secondsLeft = 60;
   curQuestionNum = 0;
   userScore = 0;
->>>>>>> main
 
   startTimer();
 
@@ -172,14 +187,13 @@ function startGame() {
   generateQuestion();
 }
 
-let timeRemaining = $("#timerDisplay");
-let secondsLeft = 60;
-
 function startTimer() {
+  let timeRemaining = $("#timerDisplay");
+
   // Sets interval in variable
   let timerInterval = setInterval(function () {
     secondsLeft--;
-    timeRemaining.textContent = secondsLeft;
+    timeRemaining.text(secondsLeft);
 
     if (secondsLeft === 0) {
       // Stops execution of action at set interval
@@ -193,6 +207,8 @@ function startTimer() {
 function gameOver() {
   //display game over screen
   //display high score input
+  console.log("gameOver");
+  showScreen("finalScoreScreen");
 }
 $(document).ready(function () {
   getJokeFromAPI();
