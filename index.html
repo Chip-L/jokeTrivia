@@ -16,17 +16,7 @@
     />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Carrois+Gothic&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Chelsea+Market&family=Finger+Paint&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Carrois+Gothic&family=Chelsea+Market&family=Finger+Paint&display=swap"
       rel="stylesheet"
     />
 
@@ -35,20 +25,21 @@
   </head>
 
   <body class="container parallax">
-    <header id="header" class="collapse hide justify-content-between mt-3">
-      <h2 class="border border-dark rounded">
-        Score:<span id="scoreDisplay"></span>
-      </h2>
-      <h1>JOKE TRIVIA</h1>
-      <h2 id="timerDisplay" class="border border-dark rounded">
-        Timer:<span id="timerDisplay"></span>
-      </h2>
+    <header
+      id="header"
+      class="collapse hide justify-content-between p-2 mt-3 mb-3 border-bottom border-dark"
+    >
+      <h2 class="">Score:<span id="scoreDisplay"></span></h2>
+      <h1>
+        <span id="jokeTriviaFull"><img id="logo" src="./assets/images/joke-trivia-logo-whitebg.png" alt="Joke Trivia"/></span>
+      </h1>
+      <h2 class="">Timer: <span id="timerDisplay"></span></h2>
     </header>
 
     <!-- main screen -->
     <main id="mainScreen" class="collapse">
       <div class="container border border-dark rounded mt-3 p-2">
-        <h1 class="row justify-content-center">Joke Trivia</h1>
+        <h1 class="row justify-content-center"><img id="logo" src="./assets/images/joke-trivia-logo-whitebg.png" alt="Joke Trivia"/></h1>
         <div class="d-flex justify-content-center">
           <button id="btnJoke" class="btn btn-secondary btn-lg m-2">
             Joke Trivia

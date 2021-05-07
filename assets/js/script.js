@@ -5,6 +5,10 @@ let curQuestionNum;
 let userScore;
 let secondsLeft;
 let gameName = "joke trivia"; // for high score display
+let timerInterval;
+
+// get the list from local storage - pass in the key to the list we want
+let getHighScores = (key) => JSON.parse(localStorage.getItem(key)) || [];
 
 // https://jservice.io/
 function getTriviaFromAPI() {
@@ -38,37 +42,36 @@ function getJokeFromAPI() {
 function generateQuestion() {
   $("#questionScreen").text("");
 
-  let currentQuestion = $("<div>").addClass("current-question");
+  let currentQuestion = $("<div>").addClass("current-question h2");
   currentQuestion.text(questionList[curQuestionNum].question);
   $("#questionScreen").append(currentQuestion);
-  let currentList = $("<ul>").addClass("answer-list");
+  let currentList = $("<ul>").addClass("answer-list h3 list-group");
 
   for (
     let i = 0;
     i < questionList[curQuestionNum].suggestedAnswers.length;
     i++
   ) {
-    let currentAnswer = $("<li>").addClass("current-answer");
+    let currentAnswer = $("<li>").addClass("current-answer list-group-item");
     currentAnswer.text(questionList[curQuestionNum].suggestedAnswers[i]);
     $(currentList).append(currentAnswer);
   }
   $("#questionScreen").append(currentList);
-  $(currentList)
-    .children()
-    .on("click", function () {
-      let userAnswer = this.textContent;
-      if (userAnswer === questionList[curQuestionNum].correctAnswer) {
-        userScore++;
-      }
-      curQuestionNum++;
+  $(currentList).children().on("click", checkAnswer);
+}
 
-      console.log(curQuestionNum, "/", questionList.length);
-      if (curQuestionNum < questionList.length) {
-        generateQuestion();
-      } else {
-        gameOver();
-      }
-    });
+function checkAnswer() {
+  let userAnswer = this.textContent;
+  if (userAnswer === questionList[curQuestionNum].correctAnswer) {
+    userScore++;
+  }
+  curQuestionNum++;
+  // console.log(curQuestionNum);
+  if (curQuestionNum < questionList.length) {
+    generateQuestion();
+  } else {
+    gameOver();
+  }
 }
 
 function shuffleArray(array) {
@@ -192,7 +195,7 @@ function startTimer() {
   let timeRemaining = $("#timerDisplay");
 
   // Sets interval in variable
-  let timerInterval = setInterval(function () {
+  timerInterval = setInterval(function () {
     secondsLeft--;
     timeRemaining.text(secondsLeft);
 
@@ -208,11 +211,29 @@ function startTimer() {
 function gameOver() {
   //display game over screen
   //display high score input
+
   console.log("gameOver");
   showScreen("finalScoreScreen");
+  getInitials();
 }
 
-// scoreTab is an optional parameter. If not included it will default to the Joke Trivia scores
+function getInitials() {
+  clearInterval(timerInterval);
+  $("#finalScoreScreen").append("<h1>GAME OVER!</h1>");
+  let finalScoreHeader = $("<h2>");
+  finalScoreHeader.text("Final Score: " + userScore);
+  let timeLeft = $("<h2>");
+  timeLeft.text("Time Left: " + secondsLeft + " seconds");
+  $("#finalScoreScreen").append(timeLeft);
+  $("#finalScoreScreen").append(finalScoreHeader);
+  $(finalScoreHeader).append("<form id='initial-form'></form>");
+  $("#initial-form").append(
+    "<label for='initial-input'>Enter Your Initials: </label>"
+  );
+  $("#initial-form").append("<input type='text' name='initial-input'>");
+  $("#initial-form").append("<button>Submit Score</button>");
+}
+
 function showHighScores() {
   $("#highScoreScreen").append("<h1 class='highScore-header>High Scores</h1>");
   let tabList = $("<ul>").addClass("nav nav-tabs nav-justified");
