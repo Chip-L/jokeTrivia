@@ -236,19 +236,13 @@ function getInitials() {
 
 function showHighScores() {
   $("#highScoreScreen").append("<h1 class='highScore-header>High Scores</h1>");
-  let tabList = $("<ul>").addClass("nav nav-tabs nav-justified");
 
+  // create the tabs
+  let tabList = $("<ul>").addClass("nav nav-tabs nav-justified");
+  // add tab names
   let jokeTab = $("<li>");
   let triviaTab = $("<li>");
-
-  if (gameName === "trivia trivia") {
-    triviaTab.addClass("active");
-    jokeTab.removeClass("active");
-  } else {
-    triviaTab.removeClass("active");
-    jokeTab.addClass("active");
-  }
-
+  // add links to the tab that will display when clicked (these are to divs)
   let jokeTabLink = $("<a>")
     .attr("data-toggle", "tab")
     .attr("href", "#jokeTable")
@@ -259,12 +253,71 @@ function showHighScores() {
     .attr("href", "#triviaTable")
     .text("Trivia Trivia");
 
+  // add links to the tabs and tabs to the list
   jokeTab.append(jokeTabLink);
   triviaTab.append(triviaTabLink);
 
   tabList.append(jokeTab);
   tabList.append(triviaTab);
+
+  // add content divs
+  let tabContent = $("<div>").attr(("class" = "tab-content"));
+
+  let jokeDiv = $("<div>")
+    .attr("class", "tab-pane fade")
+    .attr("id", "jokeTable");
+
+  let triviaDiv = $("<div>")
+    .attr("class", "tab-pane fade")
+    .attr("id", "triviaTable");
+
+  // add content to the divs and divs to the container
+  jokeDiv.append(getTable(getHighScores(jokeTrivia)));
+  triviaDiv.append(getTable(getHighScores(triviaTrivia)));
+
+  tabContent.append(jokeDiv);
+  tabContent.append(triviaDiv);
+
+  // select active tab and div based off of last game played
+  if (gameName === "trivia trivia") {
+    triviaTab.addClass("active");
+    jokeTab.removeClass("active");
+  } else {
+    triviaTab.removeClass("active");
+    jokeTab.addClass("active");
+  }
+
+  // add everything to the page
   $("#highScoreScreen").append(tabList);
+  $("#highScoreScreen").append(tabContent);
+}
+
+// takes in an array and returns a jQuery table object
+function getTable(arrData) {
+  let table = $("<table>");
+
+  // -1 is the table header
+  for (let i = -1; i < data.length; i++) {
+    let tr = $("<tr>");
+    let name;
+    let score;
+    let time;
+    if (i < 0) {
+      name = $("<th>").text("Name");
+      score = $("<th>").text("Score");
+      time = $("<th>").text("Time");
+    } else {
+      name = $("<td>").text(arrData.name);
+      score = $("<td>").text(arrData.score);
+      time = $("<td>").text(arrData.time);
+    }
+    tr.append(name);
+    tr.append(score);
+    tr.append(time);
+    table.append(tr);
+  }
+
+  return table;
 }
 
 $(document).ready(function () {
