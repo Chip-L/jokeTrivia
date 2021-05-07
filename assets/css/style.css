@@ -15,6 +15,9 @@ header {
   display: flex;
 }
 
+h1 {
+  font-family: "Finger Paint", cursive;
+}
 h2 {
   padding: 0 10px 0 10px;
 }
