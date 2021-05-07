@@ -208,6 +208,7 @@ function gameOver() {
   //display game over screen
   //display high score input
   console.log("gameOver");
+  showScreen("finalScoreScreen");
 }
 $(document).ready(function () {
   getJokeFromAPI();
