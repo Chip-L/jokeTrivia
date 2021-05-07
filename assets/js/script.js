@@ -219,19 +219,25 @@ function gameOver() {
 
 function getInitials() {
   clearInterval(timerInterval);
-  $("#finalScoreScreen").append("<h1>GAME OVER!</h1>");
+  let formContainer = $("<div>").addClass("gameOverForm");
+  $("#finalScoreScreen").append(formContainer);
+  $(formContainer).append("<h1><img class='game-over' src='./assets/images/game-over.png'></h1>");
   let finalScoreHeader = $("<h2>");
   finalScoreHeader.text("Final Score: " + userScore);
   let timeLeft = $("<h2>");
   timeLeft.text("Time Left: " + secondsLeft + " seconds");
-  $("#finalScoreScreen").append(timeLeft);
-  $("#finalScoreScreen").append(finalScoreHeader);
+  $(formContainer).append(timeLeft);
+  $(formContainer).append(finalScoreHeader);
   $(finalScoreHeader).append("<form id='initial-form'></form>");
   $("#initial-form").append(
-    "<label for='initial-input'>Enter Your Initials: </label>"
+    "<label for='initial-input'>Enter Your Initials:</label>"
   );
-  $("#initial-form").append("<input type='text' name='initial-input'>");
-  $("#initial-form").append("<button id='btnSubmit'>Submit Score</button>");
+  $("#initial-form").append(
+    "<input type='text' name='initial-input' class='ms-2'>"
+  );
+  $("#initial-form").append(
+    "<button class='btn btn-dark btn-lg ms-3' id='btnSubmit'>Submit Score</button>"
+  );
   $("#initial-form").on("submit", function (event) {
     storeHighScore(event);
   });
