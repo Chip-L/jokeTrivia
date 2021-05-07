@@ -1,9 +1,10 @@
 let jokeList = [];
 let triviaList = [];
 let questionList = [];
-let curQuestionNum = 0;
+let curQuestionNum;
 let userScore;
 let secondsLeft;
+let gameName = "joke trivia"; // for high score display
 
 // https://jservice.io/
 function getTriviaFromAPI() {
@@ -210,6 +211,41 @@ function gameOver() {
   console.log("gameOver");
   showScreen("finalScoreScreen");
 }
+
+// scoreTab is an optional parameter. If not included it will default to the Joke Trivia scores
+function showHighScores() {
+  $("#highScoreScreen").append("<h1 class='highScore-header>High Scores</h1>");
+  let tabList = $("<ul>").addClass("nav nav-tabs nav-justified");
+
+  let jokeTab = $("<li>");
+  let triviaTab = $("<li>");
+
+  if (gameName === "trivia trivia") {
+    triviaTab.addClass("active");
+    jokeTab.removeClass("active");
+  } else {
+    triviaTab.removeClass("active");
+    jokeTab.addClass("active");
+  }
+
+  let jokeTabLink = $("<a>")
+    .attr("data-toggle", "tab")
+    .attr("href", "#jokeTable")
+    .text("Joke Trivia");
+
+  let triviaTabLink = $("<a>")
+    .attr("data-toggle", "tab")
+    .attr("href", "#triviaTable")
+    .text("Trivia Trivia");
+
+  jokeTab.append(jokeTabLink);
+  triviaTab.append(triviaTabLink);
+
+  tabList.append(jokeTab);
+  tabList.append(triviaTab);
+  $("#highScoreScreen").append(tabList);
+}
+
 $(document).ready(function () {
   getJokeFromAPI();
   getTriviaFromAPI();
@@ -217,11 +253,13 @@ $(document).ready(function () {
 });
 
 $("#btnJoke").on("click", function () {
+  gameName = "joke trivia";
   createJokeArray();
   startGame();
 });
 
 $("#btnTrivia").on("click", function () {
+  gameName = "trivia trivia";
   createTriviaArray();
   startGame();
 });
