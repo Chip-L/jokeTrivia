@@ -3,6 +3,7 @@ let triviaList = [];
 let questionList = [];
 let curQuestionNum = 0;
 let userScore;
+let secondsLeft;
 
 // https://jservice.io/
 function getTriviaFromAPI() {
@@ -59,7 +60,13 @@ function generateQuestion() {
         userScore++;
       }
       curQuestionNum++;
-      generateQuestion();
+
+      console.log(curQuestionNum, "/", questionList.length);
+      if (curQuestionNum < questionList.length) {
+        generateQuestion();
+      } else {
+        gameOver();
+      }
     });
 }
 
@@ -155,7 +162,7 @@ function showScreen(screenName) {
     case "finalScoreScreen":
       mainScreen.collapse("hide");
       questionScreen.collapse("hide");
-      finalScoreScreen.collapse("hide");
+      finalScoreScreen.collapse("show");
       highScoreScreen.collapse("hide");
       header.collapse("show");
       break;
@@ -168,8 +175,9 @@ function showScreen(screenName) {
       break;
   }
 }
+
 function startGame() {
-  timerInterval = 0;
+  secondsLeft = 60;
   curQuestionNum = 0;
   userScore = 0;
 
@@ -179,14 +187,13 @@ function startGame() {
   generateQuestion();
 }
 
-let timeRemaining = $("#timerDisplay");
-let secondsLeft = 60;
-
 function startTimer() {
+  let timeRemaining = $("#timerDisplay");
+
   // Sets interval in variable
   let timerInterval = setInterval(function () {
     secondsLeft--;
-    timeRemaining.textContent = secondsLeft;
+    timeRemaining.text(secondsLeft);
 
     if (secondsLeft === 0) {
       // Stops execution of action at set interval
@@ -200,6 +207,7 @@ function startTimer() {
 function gameOver() {
   //display game over screen
   //display high score input
+  console.log("gameOver");
 }
 $(document).ready(function () {
   getJokeFromAPI();
