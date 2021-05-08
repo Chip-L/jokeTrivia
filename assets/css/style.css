@@ -104,6 +104,16 @@ button {
   text-align: center;
 }
 
+#highScore-tabs li button {
+  background-color: var(--pewter-light);
+  color: black;
+}
+
+#highScore-tabs li button.active {
+  background-color: var(--dark-shell-pink);
+  color: white;
+}
+
 @media only screen and (max-width: 768px) {
   #jokeTriviaFull {
     display: none;

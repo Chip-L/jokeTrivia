@@ -293,6 +293,7 @@ function showHighScores() {
   // create the tabs
   let tabList = $("<ul>")
     .addClass("nav nav-tabs nav-justified")
+    .attr("id", "highScore-tabs")
     .attr("role", "tablist");
 
   // add tab names
