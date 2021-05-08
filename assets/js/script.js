@@ -269,9 +269,12 @@ function storeHighScore(event) {
 }
 
 function showHighScores() {
+  $("#highScoreScreen").text("");
   showScreen("highScoreScreen");
 
-  let highScoreDiv = $("<div>").attr("id", "highScore-header");
+  let highScoreDiv = $("<div>")
+    .attr("id", "highScore-header")
+    .addClass("text-white");
   let highScoreH1 = $("<h1>").addClass("highScore-text").text("High Scores");
   highScoreDiv.append(highScoreH1);
   $("#highScoreScreen").append(highScoreDiv);
@@ -323,13 +326,15 @@ function showHighScores() {
     .addClass("tab-pane fade")
     .attr("id", "jokeTable")
     .attr("role", "tabpanel")
-    .attr("aria-labelledby", "jokeTable-tab");
+    .attr("aria-labelledby", "jokeTable-tab")
+    .addClass("bg-light border rounded-bottom");
 
   let triviaDiv = $("<div>")
     .addClass("tab-pane fade")
     .attr("id", "triviaTable")
     .attr("role", "tabpanel")
-    .attr("aria-labelledby", "triviaTable-tab");
+    .attr("aria-labelledby", "triviaTable-tab")
+    .addClass("bg-light border rounded-bottom");
 
   // add content to the divs and divs to the container
   jokeDiv.append(getTable(getHighScores("joke trivia")));
@@ -359,6 +364,7 @@ function showHighScores() {
 
   let playAgain = $("<button>");
   playAgain.text("Play Again");
+  playAgain.addClass("btn btn-light btn-lg mt-3");
   playAgain.on("click", function () {
     showScreen("mainScreen");
   });
