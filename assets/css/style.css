@@ -23,7 +23,7 @@
   opacity: 1;
 }
 
-#logo {
+.logo {
   display: block;
   height: 200px;
   width: auto;

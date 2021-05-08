@@ -274,8 +274,19 @@ function showHighScores() {
 
   let highScoreDiv = $("<div>")
     .attr("id", "highScore-header")
-    .addClass("text-white");
+    .addClass("text-white")
+    .addClass("d-flex flex-column");
+
+  let logo = $("<img>")
+    .addClass("logo")
+    .attr("id", "highScore-logo")
+    .attr("src", "./assets/images/joke-trivia-logo-whitebg.png")
+    .attr("alt", "Joke Trivia");
   let highScoreH1 = $("<h1>").addClass("highScore-text").text("High Scores");
+  let imgContainer = $("<div>").addClass("mx-auto");
+
+  imgContainer.append(logo);
+  highScoreDiv.append(imgContainer);
   highScoreDiv.append(highScoreH1);
   $("#highScoreScreen").append(highScoreDiv);
 
