@@ -385,6 +385,7 @@ function showHighScores() {
 // takes in an array and returns a jQuery table object
 function getTable(arrData) {
   let table = $("<table>");
+  table.addClass("table table-bordered m-4");
 
   // -1 is the table header
   for (let i = -1; i < arrData.length; i++) {
