@@ -326,21 +326,28 @@ function showHighScores() {
     .addClass("tab-pane fade")
     .attr("id", "jokeTable")
     .attr("role", "tabpanel")
-    .attr("aria-labelledby", "jokeTable-tab")
-    .addClass("bg-light border rounded-bottom");
+    .attr("aria-labelledby", "jokeTable-tab");
+
+  let jokeDivContent = $("<div>").addClass(
+    "bg-light border rounded-bottom d-flex justify-content-center"
+  );
 
   let triviaDiv = $("<div>")
     .addClass("tab-pane fade")
     .attr("id", "triviaTable")
     .attr("role", "tabpanel")
-    .attr("aria-labelledby", "triviaTable-tab")
-    .addClass("bg-light border rounded-bottom");
+    .attr("aria-labelledby", "triviaTable-tab");
+
+  let triviaDivContent = $("<div>").addClass(
+    "bg-light border rounded-bottom d-flex justify-content-center"
+  );
 
   // add content to the divs and divs to the container
-  jokeDiv.append(getTable(getHighScores("joke trivia")));
-  triviaDiv.append(getTable(getHighScores("trivia trivia")));
+  jokeDivContent.append(getTable(getHighScores("joke trivia")));
+  triviaDivContent.append(getTable(getHighScores("trivia trivia")));
 
-  console.log(tabContent);
+  jokeDiv.append(jokeDivContent);
+  triviaDiv.append(triviaDivContent);
 
   tabContent.append(jokeDiv);
   tabContent.append(triviaDiv);
