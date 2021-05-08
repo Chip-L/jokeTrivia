@@ -259,7 +259,9 @@ function storeHighScore(event) {
   scoreList.sort(function (a, b) {
     return b.score - a.score;
   });
-  scoreList.length = 10;
+  if (scoreList.length > 10) {
+    scoreList.length = 10;
+  }
   console.log(scoreList);
 
   localStorage.setItem(gameName, JSON.stringify(scoreList));
