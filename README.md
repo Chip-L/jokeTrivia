@@ -15,7 +15,7 @@ Build a trivia application for people who love both trivia and humor. This will 
 ## User Story
 
 AS A lover of humor and trivia
-I WANT o take a timed quiz on trivia or humor that stores high scores
+I WANT to take a timed quiz on trivia or humor that stores high scores
 SO THAT I can gauge my wits compared to my peers
 
 ## Acceptance Criteria
@@ -26,13 +26,13 @@ Here are the critical requirements necessary to develop a the game:
 GIVEN I am taking a quiz
 
 WHEN I click the Joke Trivia button
-THEN I a timer starts and I am presented with a list of jokes displaying questions and multiple answers
+THEN a timer starts and I am presented with a list of jokes displaying questions and multiple answers
 
 WHEN I click the Trivia Trivia button
-THEN I a timer starts and I am presented with a list of trivia displaying questions and multiple answers
+THEN a timer starts and I am presented with a list of trivia displaying questions and multiple answers
 
 WHEN I answer either a trivia or joke question
-THEN I am presented with another question of the same type
+THEN I recieve a score for a correct guess and I am presented with another question of the same type
 
 WHEN all questions are answered or the timer reaches 0
 THEN the game is over
@@ -57,7 +57,7 @@ Completed site's code: [https://github.com/Chip-L/jokeTrivia]
 
 Working Page: [https://chip-l.github.io/jokeTrivia/]
 
-![Screenshot: ](./assets/images/screenshot.jpg)
+![Screenshot: ](./assets/images/joke-trivia-demo.gif)
 
 ## Credits
 
