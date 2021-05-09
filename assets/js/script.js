@@ -1,15 +1,28 @@
-let jokeList = [];
-let triviaList = [];
-let questionList = [];
-let curQuestionNum;
-let userScore;
-let secondsLeft;
-let gameName = "joke trivia"; // for high score display
-let timerInterval;
+// global variables
+let jokeList = []; // array holding jokes from https://github.com/15Dkatz/official_joke_api
+let triviaList = []; // array holding jokes from // https://jservice.io/
+let questionList = []; // array holding the questions and answers that will display to the player
 
+let curQuestionNum; // tracks the current question number
+let userScore; // tracks the user's score
+let timerInterval; // tracks the timer function - so we can cancel it anywhere
+let secondsLeft; // tracks the time remaining in play
+let gameName = "joke trivia"; // for high score display
+
+/* Utility functions */
 // get the list from local storage - pass in the key to the list we want
 let getHighScores = (key) => JSON.parse(localStorage.getItem(key)) || [];
 
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * i);
+    let temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+}
+
+/* API functions */
 // https://jservice.io/
 function getTriviaFromAPI() {
   let requestURL = "https://opentdb.com/api.php?amount=10&type=multiple";
@@ -35,60 +48,6 @@ function getJokeFromAPI() {
     .then(function (data) {
       jokeList = data;
     });
-}
-
-function generateQuestion() {
-  //clears content of question screen, so multiple question screens don't display when you play again
-  $("#questionScreen").text("");
-
-  //grabs questoin from our array and creates elements dynamically to display the questions and answers
-  let currentQuestion = $("<div>").addClass("current-question h2");
-  currentQuestion.html(questionList[curQuestionNum].question);
-  $("#questionScreen").append(currentQuestion);
-  let currentList = $("<ul>").addClass("answer-list h3 list-group");
-
-  //create a list element for each anwer and append it to the question
-  for (
-    let i = 0;
-    i < questionList[curQuestionNum].suggestedAnswers.length;
-    i++
-  ) {
-    let currentAnswer = $("<li>").addClass("current-answer list-group-item");
-    currentAnswer.html(questionList[curQuestionNum].suggestedAnswers[i]);
-    $(currentList).append(currentAnswer);
-  }
-
-  $("#questionScreen").append(currentList);
-  //add event listener on the answers
-  $(currentList).children().on("click", checkAnswer);
-}
-
-function checkAnswer() {
-  //capture the text content of the answer the user clicked on
-  let userAnswer = this.textContent;
-
-  //check if answer is correct and add to user score
-  if (userAnswer === questionList[curQuestionNum].correctAnswer) {
-    userScore++;
-    $("#scoreDisplay").text(userScore);
-  }
-
-  curQuestionNum++;
-  // go to next question if there are more questions left, otherwise move to game over screen
-  if (curQuestionNum < questionList.length) {
-    generateQuestion();
-  } else {
-    gameOver();
-  }
-}
-
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * i);
-    let temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
-  }
 }
 
 function createJokeArray() {
@@ -146,6 +105,7 @@ function createTriviaArray() {
   getTriviaFromAPI();
 }
 
+/* Game play functions */
 // show or hide the screen based on the div ID
 function showScreen(screenName) {
   let mainScreen = $("#mainScreen");
@@ -216,6 +176,53 @@ function startTimer() {
   }, 1000);
 }
 
+function generateQuestion() {
+  //clears content of question screen, so multiple question screens don't display when you play again
+  $("#questionScreen").text("");
+
+  //grabs question from our array and creates elements dynamically to display the questions and answers
+  let currentQuestion = $("<div>").addClass("current-question h2");
+  // had to do html instead of text since some of the questions come back with html codes in them
+  currentQuestion.html(questionList[curQuestionNum].question);
+  $("#questionScreen").append(currentQuestion);
+  let currentList = $("<ul>").addClass("answer-list h3 list-group");
+
+  //create a list element for each answer and append it to the question
+  for (
+    let i = 0;
+    i < questionList[curQuestionNum].suggestedAnswers.length;
+    i++
+  ) {
+    let currentAnswer = $("<li>").addClass("current-answer list-group-item");
+    // had to do html instead of text since some of the answers come back with html codes in them
+    currentAnswer.html(questionList[curQuestionNum].suggestedAnswers[i]);
+    $(currentList).append(currentAnswer);
+  }
+
+  $("#questionScreen").append(currentList);
+  //add event listener on the answers
+  $(currentList).children().on("click", checkAnswer);
+}
+
+function checkAnswer() {
+  //capture the text content of the answer the user clicked on
+  let userAnswer = this.textContent;
+
+  //check if answer is correct and add to user score
+  if (userAnswer === questionList[curQuestionNum].correctAnswer) {
+    userScore++;
+    $("#scoreDisplay").text(userScore);
+  }
+
+  curQuestionNum++;
+  // go to next question if there are more questions left, otherwise move to game over screen
+  if (curQuestionNum < questionList.length) {
+    generateQuestion();
+  } else {
+    gameOver();
+  }
+}
+
 function gameOver() {
   //display game over screen
   //display high score input
@@ -226,7 +233,7 @@ function gameOver() {
 }
 
 function getInitials() {
-  //clear content of finalscore screen, so that multiple finalscore screens don't display when playing again
+  //clear content of final score screen, so that multiple final score screens don't display when playing again
   $("#finalScoreScreen").text("");
   //creating and appending elements to display the users final score and time and an input box to capture the user initials
   let formContainer = $("<div>").addClass("gameOverForm");
@@ -268,7 +275,7 @@ function storeHighScore(event) {
   //add object to array of scores
   scoreList.unshift(scoreObject);
 
-  //sort score array in decending order
+  //sort score array in descending order
   scoreList.sort(function (a, b) {
     return b.score - a.score;
   });
@@ -283,9 +290,11 @@ function storeHighScore(event) {
 }
 
 function showHighScores() {
+  // clear the old screen and display it again
   $("#highScoreScreen").text("");
   showScreen("highScoreScreen");
 
+  // set up container to store the logo and screen's title in
   let highScoreDiv = $("<div>")
     .attr("id", "highScore-header")
     .addClass("text-white")
@@ -391,10 +400,7 @@ function showHighScores() {
     triviaDiv.removeClass("show active");
   }
 
-  // add everything to the page
-  $("#highScoreScreen").append(tabList);
-  $("#highScoreScreen").append(tabContent);
-
+  // add Play Again button
   let playAgain = $("<button>");
   playAgain.text("Play Again");
   playAgain.addClass("btn btn-light btn-lg mt-3");
@@ -437,12 +443,17 @@ function getTable(arrData) {
   return table;
 }
 
+/* page load and start functions */
 $(document).ready(function () {
+  // call the API functions right away so we don't have to wait for the values
   getJokeFromAPI();
   getTriviaFromAPI();
+
+  // ensure the mainScreen is what is displayed
   showScreen("mainScreen");
 });
 
+// add event listeners to the buttons on the homepage
 $("#btnJoke").on("click", function () {
   gameName = "joke trivia";
   createJokeArray();
