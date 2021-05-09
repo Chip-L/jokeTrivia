@@ -420,3 +420,8 @@ $("#btnTrivia").on("click", function () {
   createTriviaArray();
   startGame();
 });
+
+$("#btnHighScore").on("click", function () {
+  showHighScores();
+  // showScreen("highScoreScreen");
+});
