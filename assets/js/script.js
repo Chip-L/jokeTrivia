@@ -123,7 +123,7 @@ function createJokeTriviaArray() {
   questionList = [];
 
   for (let i = 0; i < 10; i++) {
-    if (Math.floor(Math.random()) < 0.5) {
+    if (Math.random() < 0.5) {
       questionList.push(getTriviaObj(triviaList[i]));
     } else {
       questionList.push(getJokeObj(jokeList[i], i));
