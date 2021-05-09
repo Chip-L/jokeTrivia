@@ -33,20 +33,21 @@ function getJokeFromAPI() {
       return response.json();
     })
     .then(function (data) {
-      // console.log(data);
       jokeList = data;
-      // console.log(jokeList);
     });
 }
 
 function generateQuestion() {
+  //clears content of question screen, so multiple question screens don't display when you play again
   $("#questionScreen").text("");
 
+  //grabs questoin from our array and creates elements dynamically to display the questions and answers
   let currentQuestion = $("<div>").addClass("current-question h2");
   currentQuestion.html(questionList[curQuestionNum].question);
   $("#questionScreen").append(currentQuestion);
   let currentList = $("<ul>").addClass("answer-list h3 list-group");
 
+  //create a list element for each anwer and append it to the question
   for (
     let i = 0;
     i < questionList[curQuestionNum].suggestedAnswers.length;
@@ -56,18 +57,24 @@ function generateQuestion() {
     currentAnswer.html(questionList[curQuestionNum].suggestedAnswers[i]);
     $(currentList).append(currentAnswer);
   }
+
   $("#questionScreen").append(currentList);
+  //add event listener on the answers
   $(currentList).children().on("click", checkAnswer);
 }
 
 function checkAnswer() {
+  //capture the text content of the answer the user clicked on
   let userAnswer = this.textContent;
+
+  //check if answer is correct and add to user score
   if (userAnswer === questionList[curQuestionNum].correctAnswer) {
     userScore++;
     $("#scoreDisplay").text(userScore);
   }
+
   curQuestionNum++;
-  // console.log(curQuestionNum);
+  // go to next question if there are more questions left, otherwise move to game over screen
   if (curQuestionNum < questionList.length) {
     generateQuestion();
   } else {
@@ -113,7 +120,6 @@ function createJokeArray() {
   }
   // get new list of jokes (so we don't have to deal with async)
   getJokeFromAPI();
-  // console.log(questionList);
 }
 
 function createTriviaArray() {
@@ -138,7 +144,6 @@ function createTriviaArray() {
 
   // get new list of trivia (so we don't have to deal with async)
   getTriviaFromAPI();
-  //  console.log(questionList);
 }
 
 // show or hide the screen based on the div ID
@@ -221,7 +226,9 @@ function gameOver() {
 }
 
 function getInitials() {
+  //clear content of finalscore screen, so that multiple finalscore screens don't display when playing again
   $("#finalScoreScreen").text("");
+  //creating and appending elements to display the users final score and time and an input box to capture the user initials
   let formContainer = $("<div>").addClass("gameOverForm");
   $("#finalScoreScreen").append(formContainer);
   $(formContainer).append(
@@ -243,6 +250,7 @@ function getInitials() {
   $("#initial-form").append(
     "<button class='btn btn-dark btn-lg ms-3' id='btnSubmit'>Submit Score</button>"
   );
+  //event listener on the submit button that calls the storeHighScore function
   $("#initial-form").on("submit", function (event) {
     storeHighScore(event);
   });
@@ -250,23 +258,26 @@ function getInitials() {
 
 function storeHighScore(event) {
   event.preventDefault();
+  //set up object to store user initials from input form, user score and seconds left from a global variable
   let scoreList = getHighScores(gameName);
   let scoreObject = {
     name: $("#initial-form input").val(),
     score: userScore,
     time: secondsLeft,
   };
-  // console.log(scoreObject);
+  //add object to array of scores
   scoreList.unshift(scoreObject);
 
+  //sort score array in decending order
   scoreList.sort(function (a, b) {
     return b.score - a.score;
   });
+  //set score list to ten, only displaying top ten scores, but also allow scoreLists that are shorter than ten
   if (scoreList.length > 10) {
     scoreList.length = 10;
   }
-  console.log(scoreList);
 
+  //convert score object into a string and then store it in local storage
   localStorage.setItem(gameName, JSON.stringify(scoreList));
   showHighScores();
 }
