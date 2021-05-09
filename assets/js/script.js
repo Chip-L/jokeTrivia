@@ -124,10 +124,17 @@ function createJokeTriviaArray() {
 
   for (let i = 0; i < 10; i++) {
     if (Math.floor(Math.random()) < 0.5) {
-      //
+      questionList.push(getTriviaObj(triviaList[i]));
+    } else {
+      questionList.push(getJokeObj(jokeList[i], i));
     }
     //
   }
+  console.log(questionList);
+
+  // get new lists (so we don't have to deal with async)
+  getJokeFromAPI();
+  getTriviaFromAPI();
 }
 
 /* Game play functions */
