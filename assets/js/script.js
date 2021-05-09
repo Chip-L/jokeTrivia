@@ -56,26 +56,27 @@ function createJokeArray() {
 
   //populate the initial object
   for (let i = 0; i < jokeList.length; i++) {
-    let objQAndA = {
-      question: jokeList[i].setup,
-      suggestedAnswers: [jokeList[i].punchline],
-      correctAnswer: jokeList[i].punchline,
-      userChoice: "",
-    };
+    // let objQAndA = {
+    //   question: jokeList[i].setup,
+    //   suggestedAnswers: [jokeList[i].punchline],
+    //   correctAnswer: jokeList[i].punchline,
+    //   userChoice: "",
+    // };
 
-    // get list of answers (i = correct answer)
-    let randomNum;
-    let randomNumUsed = [i];
-    for (let j = 1; j < 4; j++) {
-      do {
-        randomNum = Math.floor(Math.random() * jokeList.length);
-      } while (randomNumUsed.includes(randomNum));
-      randomNumUsed.push(randomNum);
-      objQAndA.suggestedAnswers.push(jokeList[randomNum].punchline);
-    }
+    // // get list of answers (i = correct answer)
+    // let randomNum;
+    // let randomNumUsed = [i];
+    // for (let j = 1; j < 4; j++) {
+    //   do {
+    //     randomNum = Math.floor(Math.random() * jokeList.length);
+    //   } while (randomNumUsed.includes(randomNum));
+    //   randomNumUsed.push(randomNum);
+    //   objQAndA.suggestedAnswers.push(jokeList[randomNum].punchline);
+    // }
 
-    shuffleArray(objQAndA.suggestedAnswers);
-    questionList.push(objQAndA);
+    // shuffleArray(objQAndA.suggestedAnswers);
+    // questionList.push(objQAndA);
+    questionList.push(getJokeObj(jokeList[i], i));
   }
   // get new list of jokes (so we don't have to deal with async)
   getJokeFromAPI();
@@ -103,6 +104,48 @@ function createTriviaArray() {
 
   // get new list of trivia (so we don't have to deal with async)
   getTriviaFromAPI();
+}
+
+// this will take the joke from the jokeList and format it for the questionList
+// joke is the item from the jokeList array
+// arrIndex is the current item index in the jokeList
+function getJokeObj(joke, arrIndex) {
+  let objQAndA = {
+    question: joke.setup,
+    suggestedAnswers: [joke.punchline],
+    correctAnswer: joke.punchline,
+    userChoice: "",
+  };
+
+  // get list of answers (arrIndex = correct answer)
+  let randomNum;
+  let randomNumUsed = [arrIndex];
+  for (let i = 1; i < 4; i++) {
+    do {
+      randomNum = Math.floor(Math.random() * jokeList.length);
+    } while (randomNumUsed.includes(randomNum));
+    randomNumUsed.push(randomNum);
+    objQAndA.suggestedAnswers.push(jokeList[randomNum].punchline);
+  }
+
+  shuffleArray(objQAndA.suggestedAnswers);
+  return objQAndA;
+}
+
+// this will take the trivia object from the triviaList and format it for the questionList
+// trivia is the item from the triviaList array
+function getTriviaObj(trivia) {}
+
+function createJokeTriviaArray() {
+  // clear the array from the previous questions
+  questionList = [];
+
+  for (let i = 0; i < 10; i++) {
+    if (Math.floor(Math.random()) < 0.5) {
+      //
+    }
+    //
+  }
 }
 
 /* Game play functions */
