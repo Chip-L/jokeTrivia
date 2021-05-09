@@ -186,6 +186,8 @@ function startGame() {
   curQuestionNum = 0;
   userScore = 0;
 
+  $("#timerDisplay").text(secondsLeft);
+  $("#scoreDisplay").text(userScore);
   startTimer();
 
   showScreen("questionScreen");
