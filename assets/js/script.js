@@ -64,6 +64,7 @@ function checkAnswer() {
   let userAnswer = this.textContent;
   if (userAnswer === questionList[curQuestionNum].correctAnswer) {
     userScore++;
+    $("#scoreDisplay").text(userScore);
   }
   curQuestionNum++;
   // console.log(curQuestionNum);
@@ -185,6 +186,8 @@ function startGame() {
   curQuestionNum = 0;
   userScore = 0;
 
+  $("#timerDisplay").text(secondsLeft);
+  $("#scoreDisplay").text(userScore);
   startTimer();
 
   showScreen("questionScreen");
@@ -253,7 +256,7 @@ function storeHighScore(event) {
     score: userScore,
     time: secondsLeft,
   };
-  console.log(scoreObject);
+  // console.log(scoreObject);
   scoreList.unshift(scoreObject);
 
   scoreList.sort(function (a, b) {
@@ -443,5 +446,4 @@ $("#btnTrivia").on("click", function () {
 
 $("#btnHighScore").on("click", function () {
   showHighScores();
-  // showScreen("highScoreScreen");
 });
