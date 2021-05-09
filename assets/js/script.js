@@ -274,14 +274,26 @@ function showHighScores() {
 
   let highScoreDiv = $("<div>")
     .attr("id", "highScore-header")
-    .addClass("text-white");
+    .addClass("text-white")
+    .addClass("d-flex flex-column");
+
+  let logo = $("<img>")
+    .addClass("logo")
+    .attr("id", "highScore-logo")
+    .attr("src", "./assets/images/joke-trivia-logo-whitebg.png")
+    .attr("alt", "Joke Trivia");
   let highScoreH1 = $("<h1>").addClass("highScore-text").text("High Scores");
+  let imgContainer = $("<div>").addClass("mx-auto");
+
+  imgContainer.append(logo);
+  highScoreDiv.append(imgContainer);
   highScoreDiv.append(highScoreH1);
   $("#highScoreScreen").append(highScoreDiv);
 
   // create the tabs
   let tabList = $("<ul>")
     .addClass("nav nav-tabs nav-justified")
+    .attr("id", "highScore-tabs")
     .attr("role", "tablist");
 
   // add tab names
@@ -326,21 +338,28 @@ function showHighScores() {
     .addClass("tab-pane fade")
     .attr("id", "jokeTable")
     .attr("role", "tabpanel")
-    .attr("aria-labelledby", "jokeTable-tab")
-    .addClass("bg-light border rounded-bottom");
+    .attr("aria-labelledby", "jokeTable-tab");
+
+  let jokeDivContent = $("<div>").addClass(
+    "bg-light border rounded-bottom d-flex justify-content-center"
+  );
 
   let triviaDiv = $("<div>")
     .addClass("tab-pane fade")
     .attr("id", "triviaTable")
     .attr("role", "tabpanel")
-    .attr("aria-labelledby", "triviaTable-tab")
-    .addClass("bg-light border rounded-bottom");
+    .attr("aria-labelledby", "triviaTable-tab");
+
+  let triviaDivContent = $("<div>").addClass(
+    "bg-light border rounded-bottom d-flex justify-content-center"
+  );
 
   // add content to the divs and divs to the container
-  jokeDiv.append(getTable(getHighScores("joke trivia")));
-  triviaDiv.append(getTable(getHighScores("trivia trivia")));
+  jokeDivContent.append(getTable(getHighScores("joke trivia")));
+  triviaDivContent.append(getTable(getHighScores("trivia trivia")));
 
-  console.log(tabContent);
+  jokeDiv.append(jokeDivContent);
+  triviaDiv.append(triviaDivContent);
 
   tabContent.append(jokeDiv);
   tabContent.append(triviaDiv);
@@ -378,6 +397,7 @@ function showHighScores() {
 // takes in an array and returns a jQuery table object
 function getTable(arrData) {
   let table = $("<table>");
+  table.addClass("table table-bordered m-4");
 
   // -1 is the table header
   for (let i = -1; i < arrData.length; i++) {

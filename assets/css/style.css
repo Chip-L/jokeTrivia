@@ -1,29 +1,29 @@
-:root   {
+:root {
   --light-beaver-gray: #bcb4ac; /* light */
   --pewter-light: #848484; /* grey-light */
-    --pewter-gray: #6c6c6c; /* grey */
+  --pewter-gray: #6c6c6c; /* grey */
   --dark-shell-pink: #a14b51; /* red */
   --very-dark-cocoa: #624b45; /* cocoa */
-   --black: #000000; /* dark */
-  }
-  
+  --black: #000000; /* dark */
+}
+
 .light {
   background-color: var(--light-beaver-gray);
-  }
+}
 
 .red {
   background-color: var(--dark-shell-pink);
-  }
-  
+}
+
 .opacity-cell {
   opacity: 0.7;
-  }
-  
+}
+
 .opacity-full {
   opacity: 1;
-  }
+}
 
-#logo {
+.logo {
   display: block;
   height: 200px;
   width: auto;
@@ -92,7 +92,26 @@ button {
   width: auto;
   margin-left: auto;
   margin-right: auto;
-  padding: 1%
+  padding: 1%;
+}
+
+.table {
+  max-width: 80%;
+}
+
+.table th,
+.table td {
+  text-align: center;
+}
+
+#highScore-tabs li button {
+  background-color: var(--pewter-light);
+  color: black;
+}
+
+#highScore-tabs li button.active {
+  background-color: var(--dark-shell-pink);
+  color: white;
 }
 
 @media only screen and (max-width: 768px) {
