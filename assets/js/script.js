@@ -1,15 +1,28 @@
-let jokeList = [];
-let triviaList = [];
-let questionList = [];
-let curQuestionNum;
-let userScore;
-let secondsLeft;
-let gameName = "joke trivia"; // for high score display
-let timerInterval;
+// global variables
+let jokeList = []; // array holding jokes from https://github.com/15Dkatz/official_joke_api
+let triviaList = []; // array holding jokes from // https://jservice.io/
+let questionList = []; // array holding the questions and answers that will display to the player
 
+let curQuestionNum; // tracks the current question number
+let userScore; // tracks the user's score
+let timerInterval; // tracks the timer function - so we can cancel it anywhere
+let secondsLeft; // tracks the time remaining in play
+let gameName = "joke trivia"; // for high score display
+
+/* Utility functions */
 // get the list from local storage - pass in the key to the list we want
 let getHighScores = (key) => JSON.parse(localStorage.getItem(key)) || [];
 
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * i);
+    let temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+}
+
+/* API functions */
 // https://jservice.io/
 function getTriviaFromAPI() {
   let requestURL = "https://opentdb.com/api.php?amount=10&type=multiple";
@@ -37,86 +50,13 @@ function getJokeFromAPI() {
     });
 }
 
-function generateQuestion() {
-  //clears content of question screen, so multiple question screens don't display when you play again
-  $("#questionScreen").text("");
-
-  //grabs questoin from our array and creates elements dynamically to display the questions and answers
-  let currentQuestion = $("<div>").addClass("current-question h2");
-  currentQuestion.html(questionList[curQuestionNum].question);
-  $("#questionScreen").append(currentQuestion);
-  let currentList = $("<ul>").addClass("answer-list h3 list-group");
-
-  //create a list element for each anwer and append it to the question
-  for (
-    let i = 0;
-    i < questionList[curQuestionNum].suggestedAnswers.length;
-    i++
-  ) {
-    let currentAnswer = $("<li>").addClass("current-answer list-group-item");
-    currentAnswer.html(questionList[curQuestionNum].suggestedAnswers[i]);
-    $(currentList).append(currentAnswer);
-  }
-
-  $("#questionScreen").append(currentList);
-  //add event listener on the answers
-  $(currentList).children().on("click", checkAnswer);
-}
-
-function checkAnswer() {
-  //capture the text content of the answer the user clicked on
-  let userAnswer = this.textContent;
-
-  //check if answer is correct and add to user score
-  if (userAnswer === questionList[curQuestionNum].correctAnswer) {
-    userScore++;
-    $("#scoreDisplay").text(userScore);
-  }
-
-  curQuestionNum++;
-  // go to next question if there are more questions left, otherwise move to game over screen
-  if (curQuestionNum < questionList.length) {
-    generateQuestion();
-  } else {
-    gameOver();
-  }
-}
-
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * i);
-    let temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
-  }
-}
-
 function createJokeArray() {
   // clear the array from the previous questions
   questionList = [];
 
   //populate the initial object
   for (let i = 0; i < jokeList.length; i++) {
-    let objQAndA = {
-      question: jokeList[i].setup,
-      suggestedAnswers: [jokeList[i].punchline],
-      correctAnswer: jokeList[i].punchline,
-      userChoice: "",
-    };
-
-    // get list of answers (i = correct answer)
-    let randomNum;
-    let randomNumUsed = [i];
-    for (let j = 1; j < 4; j++) {
-      do {
-        randomNum = Math.floor(Math.random() * jokeList.length);
-      } while (randomNumUsed.includes(randomNum));
-      randomNumUsed.push(randomNum);
-      objQAndA.suggestedAnswers.push(jokeList[randomNum].punchline);
-    }
-
-    shuffleArray(objQAndA.suggestedAnswers);
-    questionList.push(objQAndA);
+    questionList.push(getJokeObj(jokeList[i], i));
   }
   // get new list of jokes (so we don't have to deal with async)
   getJokeFromAPI();
@@ -127,25 +67,77 @@ function createTriviaArray() {
   questionList = [];
 
   for (let i = 0; i < triviaList.length; i++) {
-    // make incorrect answer list have all answers
-    triviaList[i].incorrect_answers.unshift(triviaList[i].correct_answer);
-
-    //populate the initial object
-    let objQAndA = {
-      question: triviaList[i].question,
-      suggestedAnswers: triviaList[i].incorrect_answers,
-      correctAnswer: triviaList[i].correct_answer,
-      userChoice: "",
-    };
-
-    shuffleArray(objQAndA.suggestedAnswers);
-    questionList.push(objQAndA);
+    questionList.push(getTriviaObj(triviaList[i]));
   }
 
   // get new list of trivia (so we don't have to deal with async)
   getTriviaFromAPI();
 }
 
+function createJokeTriviaArray() {
+  // clear the array from the previous questions
+  questionList = [];
+
+  for (let i = 0; i < 10; i++) {
+    if (Math.random() < 0.5) {
+      questionList.push(getTriviaObj(triviaList[i]));
+    } else {
+      questionList.push(getJokeObj(jokeList[i], i));
+    }
+    //
+  }
+  console.log(questionList);
+
+  // get new lists (so we don't have to deal with async)
+  getJokeFromAPI();
+  getTriviaFromAPI();
+}
+
+/* this will take the joke from the jokeList and format it for the questionList
+  joke is the item from the jokeList array
+  arrIndex is the current item index in the jokeList */
+function getJokeObj(joke, arrIndex) {
+  let objQAndA = {
+    question: joke.setup,
+    suggestedAnswers: [joke.punchline],
+    correctAnswer: joke.punchline,
+    userChoice: "",
+  };
+
+  // get list of answers (arrIndex = correct answer)
+  let randomNum;
+  let randomNumUsed = [arrIndex];
+  for (let i = 1; i < 4; i++) {
+    do {
+      randomNum = Math.floor(Math.random() * jokeList.length);
+    } while (randomNumUsed.includes(randomNum));
+    randomNumUsed.push(randomNum);
+    objQAndA.suggestedAnswers.push(jokeList[randomNum].punchline);
+  }
+
+  shuffleArray(objQAndA.suggestedAnswers);
+  return objQAndA;
+}
+
+/* this will take the trivia object from the triviaList and format it for the questionList
+  trivia is the item from the triviaList array */
+function getTriviaObj(trivia) {
+  // make incorrect answer list have all answers
+  trivia.incorrect_answers.unshift(trivia.correct_answer);
+
+  //populate the initial object
+  let objQAndA = {
+    question: trivia.question,
+    suggestedAnswers: trivia.incorrect_answers,
+    correctAnswer: trivia.correct_answer,
+    userChoice: "",
+  };
+
+  shuffleArray(objQAndA.suggestedAnswers);
+  return objQAndA;
+}
+
+/* Game play functions */
 // show or hide the screen based on the div ID
 function showScreen(screenName) {
   let mainScreen = $("#mainScreen");
@@ -216,6 +208,53 @@ function startTimer() {
   }, 1000);
 }
 
+function generateQuestion() {
+  //clears content of question screen, so multiple question screens don't display when you play again
+  $("#questionScreen").text("");
+
+  //grabs question from our array and creates elements dynamically to display the questions and answers
+  let currentQuestion = $("<div>").addClass("current-question h2");
+  // had to do html instead of text since some of the questions come back with html codes in them
+  currentQuestion.html(questionList[curQuestionNum].question);
+  $("#questionScreen").append(currentQuestion);
+  let currentList = $("<ul>").addClass("answer-list h3 list-group");
+
+  //create a list element for each answer and append it to the question
+  for (
+    let i = 0;
+    i < questionList[curQuestionNum].suggestedAnswers.length;
+    i++
+  ) {
+    let currentAnswer = $("<li>").addClass("current-answer list-group-item");
+    // had to do html instead of text since some of the answers come back with html codes in them
+    currentAnswer.html(questionList[curQuestionNum].suggestedAnswers[i]);
+    $(currentList).append(currentAnswer);
+  }
+
+  $("#questionScreen").append(currentList);
+  //add event listener on the answers
+  $(currentList).children().on("click", checkAnswer);
+}
+
+function checkAnswer() {
+  //capture the text content of the answer the user clicked on
+  let userAnswer = this.textContent;
+
+  //check if answer is correct and add to user score
+  if (userAnswer === questionList[curQuestionNum].correctAnswer) {
+    userScore++;
+    $("#scoreDisplay").text(userScore);
+  }
+
+  curQuestionNum++;
+  // go to next question if there are more questions left, otherwise move to game over screen
+  if (curQuestionNum < questionList.length) {
+    generateQuestion();
+  } else {
+    gameOver();
+  }
+}
+
 function gameOver() {
   //display game over screen
   //display high score input
@@ -226,7 +265,7 @@ function gameOver() {
 }
 
 function getInitials() {
-  //clear content of finalscore screen, so that multiple finalscore screens don't display when playing again
+  //clear content of final score screen, so that multiple final score screens don't display when playing again
   $("#finalScoreScreen").text("");
   //creating and appending elements to display the users final score and time and an input box to capture the user initials
   let formContainer = $("<div>").addClass("gameOverForm");
@@ -268,7 +307,7 @@ function storeHighScore(event) {
   //add object to array of scores
   scoreList.unshift(scoreObject);
 
-  //sort score array in decending order
+  //sort score array in descending order
   scoreList.sort(function (a, b) {
     return b.score - a.score;
   });
@@ -283,9 +322,11 @@ function storeHighScore(event) {
 }
 
 function showHighScores() {
+  // clear the old screen and display it again
   $("#highScoreScreen").text("");
   showScreen("highScoreScreen");
 
+  // set up container to store the logo and screen's title in
   let highScoreDiv = $("<div>")
     .attr("id", "highScore-header")
     .addClass("text-white")
@@ -312,6 +353,9 @@ function showHighScores() {
 
   // add tab names
   let jokeTab = $("<li>").addClass("nav-item").attr("role", "presentation");
+  let jokeTriviaTab = $("<li>")
+    .addClass("nav-item")
+    .attr("role", "presentation");
   let triviaTab = $("<li>").addClass("nav-item").attr("role", "presentation");
 
   // add links to the tab that will display when clicked (these are to divs)
@@ -326,6 +370,17 @@ function showHighScores() {
     // .attr("aria-selected", "false") <---- set when selecting active panel
     .text("Joke Trivia");
 
+  let jokeTriviaTabLink = $("<button>")
+    .addClass("nav-link")
+    .attr("id", "jokeTriviaTable-tab")
+    .attr("data-bs-toggle", "tab")
+    .attr("data-bs-target", "#jokeTriviaTable")
+    .attr("type", "button")
+    .attr("role", "tab")
+    .attr("aria-controls", "jokeTriviaTable")
+    // .attr("aria-selected", "false") <---- set when selecting active panel
+    .text("Jokes & Trivia");
+
   let triviaTabLink = $("<button>")
     .addClass("nav-link")
     .attr("id", "triviaTable-tab")
@@ -339,9 +394,11 @@ function showHighScores() {
 
   // add links to the tabs and tabs to the list
   jokeTab.append(jokeTabLink);
+  jokeTriviaTab.append(jokeTriviaTabLink);
   triviaTab.append(triviaTabLink);
 
   tabList.append(jokeTab);
+  tabList.append(jokeTriviaTab);
   tabList.append(triviaTab);
 
   // add content divs
@@ -358,6 +415,16 @@ function showHighScores() {
     "bg-light border rounded-bottom d-flex justify-content-center"
   );
 
+  let jokeTriviaDiv = $("<div>")
+    .addClass("tab-pane fade")
+    .attr("id", "jokeTriviaTable")
+    .attr("role", "tabpanel")
+    .attr("aria-labelledby", "jokeTriviaTable-tab");
+
+  let jokeTriviaDivContent = $("<div>").addClass(
+    "bg-light border rounded-bottom d-flex justify-content-center"
+  );
+
   let triviaDiv = $("<div>")
     .addClass("tab-pane fade")
     .attr("id", "triviaTable")
@@ -370,31 +437,32 @@ function showHighScores() {
 
   // add content to the divs and divs to the container
   jokeDivContent.append(getTable(getHighScores("joke trivia")));
+  jokeTriviaDivContent.append(getTable(getHighScores("joke and trivia")));
   triviaDivContent.append(getTable(getHighScores("trivia trivia")));
 
   jokeDiv.append(jokeDivContent);
+  jokeTriviaDiv.append(jokeTriviaDivContent);
   triviaDiv.append(triviaDivContent);
 
   tabContent.append(jokeDiv);
+  tabContent.append(jokeTriviaDiv);
   tabContent.append(triviaDiv);
 
   // select active tab and div based off of last game played
   if (gameName === "trivia trivia") {
     triviaTabLink.addClass("active").attr("aria-selected", "true");
-    jokeTabLink.removeClass("active").attr("aria-selected", "false");
     triviaDiv.addClass("show active");
-    jokeDiv.removeClass("show active");
+  } else if (gameName === "joke and trivia") {
+    jokeTriviaTabLink.addClass("active").attr("aria-selected", "true");
+    jokeTriviaDiv.addClass("show active");
   } else {
     jokeTabLink.addClass("active").attr("aria-selected", "true");
-    triviaTabLink.removeClass("active").attr("aria-selected", "false");
     jokeDiv.addClass("show active");
-    triviaDiv.removeClass("show active");
+    // triviaTabLink.removeClass("active").attr("aria-selected", "false"); <-- not needed since we clear everything between displays
+    // triviaDiv.removeClass("show active");
   }
 
-  // add everything to the page
-  $("#highScoreScreen").append(tabList);
-  $("#highScoreScreen").append(tabContent);
-
+  // add Play Again button
   let playAgain = $("<button>");
   playAgain.text("Play Again");
   playAgain.addClass("btn btn-light btn-lg mt-3");
@@ -437,15 +505,26 @@ function getTable(arrData) {
   return table;
 }
 
+/* page load and start functions */
 $(document).ready(function () {
+  // call the API functions right away so we don't have to wait for the values
   getJokeFromAPI();
   getTriviaFromAPI();
+
+  // ensure the mainScreen is what is displayed
   showScreen("mainScreen");
 });
 
+// add event listeners to the buttons on the homepage
 $("#btnJoke").on("click", function () {
   gameName = "joke trivia";
   createJokeArray();
+  startGame();
+});
+
+$("#btnJokeTrivia").on("click", function () {
+  gameName = "joke and trivia";
+  createJokeTriviaArray();
   startGame();
 });
 
