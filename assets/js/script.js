@@ -353,6 +353,9 @@ function showHighScores() {
 
   // add tab names
   let jokeTab = $("<li>").addClass("nav-item").attr("role", "presentation");
+  let jokeTriviaTab = $("<li>")
+    .addClass("nav-item")
+    .attr("role", "presentation");
   let triviaTab = $("<li>").addClass("nav-item").attr("role", "presentation");
 
   // add links to the tab that will display when clicked (these are to divs)
@@ -367,6 +370,17 @@ function showHighScores() {
     // .attr("aria-selected", "false") <---- set when selecting active panel
     .text("Joke Trivia");
 
+  let jokeTriviaTabLink = $("<button>")
+    .addClass("nav-link")
+    .attr("id", "jokeTriviaTable-tab")
+    .attr("data-bs-toggle", "tab")
+    .attr("data-bs-target", "#jokeTriviaTable")
+    .attr("type", "button")
+    .attr("role", "tab")
+    .attr("aria-controls", "jokeTriviaTable")
+    // .attr("aria-selected", "false") <---- set when selecting active panel
+    .text("Jokes & Trivia");
+
   let triviaTabLink = $("<button>")
     .addClass("nav-link")
     .attr("id", "triviaTable-tab")
@@ -380,9 +394,11 @@ function showHighScores() {
 
   // add links to the tabs and tabs to the list
   jokeTab.append(jokeTabLink);
+  jokeTriviaTab.append(jokeTriviaTabLink);
   triviaTab.append(triviaTabLink);
 
   tabList.append(jokeTab);
+  tabList.append(jokeTriviaTab);
   tabList.append(triviaTab);
 
   // add content divs
@@ -399,6 +415,16 @@ function showHighScores() {
     "bg-light border rounded-bottom d-flex justify-content-center"
   );
 
+  let jokeTriviaDiv = $("<div>")
+    .addClass("tab-pane fade")
+    .attr("id", "jokeTriviaTable")
+    .attr("role", "tabpanel")
+    .attr("aria-labelledby", "jokeTriviaTable-tab");
+
+  let jokeTriviaDivContent = $("<div>").addClass(
+    "bg-light border rounded-bottom d-flex justify-content-center"
+  );
+
   let triviaDiv = $("<div>")
     .addClass("tab-pane fade")
     .attr("id", "triviaTable")
@@ -411,25 +437,29 @@ function showHighScores() {
 
   // add content to the divs and divs to the container
   jokeDivContent.append(getTable(getHighScores("joke trivia")));
+  jokeTriviaDivContent.append(getTable(getHighScores("joke and trivia")));
   triviaDivContent.append(getTable(getHighScores("trivia trivia")));
 
   jokeDiv.append(jokeDivContent);
+  jokeTriviaDiv.append(jokeTriviaDivContent);
   triviaDiv.append(triviaDivContent);
 
   tabContent.append(jokeDiv);
+  tabContent.append(jokeTriviaDiv);
   tabContent.append(triviaDiv);
 
   // select active tab and div based off of last game played
   if (gameName === "trivia trivia") {
     triviaTabLink.addClass("active").attr("aria-selected", "true");
-    jokeTabLink.removeClass("active").attr("aria-selected", "false");
     triviaDiv.addClass("show active");
-    jokeDiv.removeClass("show active");
+  } else if (gameName === "joke and trivia") {
+    jokeTriviaTabLink.addClass("active").attr("aria-selected", "true");
+    jokeTriviaDiv.addClass("show active");
   } else {
     jokeTabLink.addClass("active").attr("aria-selected", "true");
-    triviaTabLink.removeClass("active").attr("aria-selected", "false");
     jokeDiv.addClass("show active");
-    triviaDiv.removeClass("show active");
+    // triviaTabLink.removeClass("active").attr("aria-selected", "false"); <-- not needed since we clear everything between displays
+    // triviaDiv.removeClass("show active");
   }
 
   // add Play Again button
