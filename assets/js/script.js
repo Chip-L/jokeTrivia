@@ -74,6 +74,25 @@ function createTriviaArray() {
   getTriviaFromAPI();
 }
 
+function createJokeTriviaArray() {
+  // clear the array from the previous questions
+  questionList = [];
+
+  for (let i = 0; i < 10; i++) {
+    if (Math.random() < 0.5) {
+      questionList.push(getTriviaObj(triviaList[i]));
+    } else {
+      questionList.push(getJokeObj(jokeList[i], i));
+    }
+    //
+  }
+  console.log(questionList);
+
+  // get new lists (so we don't have to deal with async)
+  getJokeFromAPI();
+  getTriviaFromAPI();
+}
+
 /* this will take the joke from the jokeList and format it for the questionList
   joke is the item from the jokeList array
   arrIndex is the current item index in the jokeList */
@@ -116,25 +135,6 @@ function getTriviaObj(trivia) {
 
   shuffleArray(objQAndA.suggestedAnswers);
   return objQAndA;
-}
-
-function createJokeTriviaArray() {
-  // clear the array from the previous questions
-  questionList = [];
-
-  for (let i = 0; i < 10; i++) {
-    if (Math.random() < 0.5) {
-      questionList.push(getTriviaObj(triviaList[i]));
-    } else {
-      questionList.push(getJokeObj(jokeList[i], i));
-    }
-    //
-  }
-  console.log(questionList);
-
-  // get new lists (so we don't have to deal with async)
-  getJokeFromAPI();
-  getTriviaFromAPI();
 }
 
 /* Game play functions */
@@ -489,6 +489,12 @@ $(document).ready(function () {
 $("#btnJoke").on("click", function () {
   gameName = "joke trivia";
   createJokeArray();
+  startGame();
+});
+
+$("#btnJokeTrivia").on("click", function () {
+  gameName = "joke and trivia";
+  createJokeTriviaArray();
   startGame();
 });
 
